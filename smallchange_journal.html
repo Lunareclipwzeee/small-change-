@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmallChange - Trade Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#04060a;--p1:#080c12;--p2:#0c1218;--p3:#101820;--border:#132030;--gold:#d4a853;--gold2:#f0c878;--buy:#00d97e;--sell:#ff3355;--warn:#ff9f0a;--text:#8aa8c0;--bright:#ddeeff;--dim:#1e3448;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(212,168,83,.04) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:840px;margin:0 auto;padding:36px 18px 80px;}
+.back-btn{position:fixed;top:10px;left:10px;z-index:999;display:flex;align-items:center;gap:6px;background:rgba(4,6,10,.85);border:1px solid #132030;border-radius:3px;padding:6px 12px;text-decoration:none;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--gold);backdrop-filter:blur(8px);}
+.hdr{text-align:center;margin-bottom:36px;}
+.hdr-date{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:5px;color:var(--gold);opacity:.7;margin-bottom:8px;}
+.hdr-title{font-family:'Orbitron',monospace;font-size:clamp(22px,4vw,38px);font-weight:900;color:var(--bright);letter-spacing:2px;line-height:1;}
+.hdr-title span{color:var(--gold);}
+.hdr-sub{margin-top:8px;font-size:17px;color:var(--dim);font-style:italic;}
+.sbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:14px 20px;margin-bottom:24px;}
+.si{display:flex;flex-direction:column;gap:3px;text-align:center;}
+.si-val{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--bright);}
+.si-val.g{color:var(--buy);}
+.si-val.r{color:var(--sell);}
+.si-val.o{color:var(--gold);}
+.si-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--dim);}
+.si-div{width:1px;height:36px;background:var(--border);}
+.neuro-pill{padding:6px 14px;border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;font-weight:700;}
+.neuro-pill.cleared{background:rgba(0,217,126,.08);border:1px solid rgba(0,217,126,.2);color:var(--buy);}
+.neuro-pill.caution{background:rgba(255,159,10,.08);border:1px solid rgba(255,159,10,.2);color:var(--warn);}
+.neuro-pill.blocked{background:rgba(255,51,85,.08);border:1px solid rgba(255,51,85,.2);color:var(--sell);}
+.slot-row{display:flex;align-items:center;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+.slot{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:3px;border:1px solid var(--border);font-family:'Orbitron',monospace;font-size:14px;font-weight:700;transition:all .3s;}
+.slot.done-win{border-color:var(--buy);background:rgba(0,217,126,.08);color:var(--buy);}
+.slot.done-loss{border-color:var(--sell);background:rgba(255,51,85,.08);color:var(--sell);}
+.slot.current{border-color:var(--gold);background:rgba(212,168,83,.08);color:var(--gold);box-shadow:0 0 14px rgba(212,168,83,.2);}
+.slot.pending{border-color:var(--border);color:var(--dim);}
+.slot-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);}
+.sh{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.sh::after{content:'';flex:1;height:1px;background:var(--border);}
+.journal-card{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:22px;margin-bottom:16px;}
+.jc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.jc-num{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:2px;}
+.jc-time{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);}
+.outcome-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;}
+.outcome-btn{padding:12px 8px;border-radius:3px;border:1px solid var(--border);background:var(--p2);cursor:pointer;text-align:center;transition:all .2s;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--dim);}
+.outcome-btn.sel-win{border-color:var(--buy);background:rgba(0,217,126,.08);color:var(--buy);}
+.outcome-btn.sel-loss{border-color:var(--sell);background:rgba(255,51,85,.08);color:var(--sell);}
+.outcome-btn.sel-be{border-color:var(--warn);background:rgba(255,159,10,.08);color:var(--warn);}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.field-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--dim);}
+.field input,.field select,.field textarea{background:var(--p2);border:1px solid var(--border);color:var(--bright);padding:9px 12px;border-radius:3px;font-family:'Crimson Pro',serif;font-size:15px;outline:none;transition:border-color .2s;width:100%;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
+.field textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.field-full{grid-column:1/-1;}
+.emo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.emo-item{background:var(--p2);border:1px solid var(--border);border-radius:3px;padding:12px;}
+.emo-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--dim);margin-bottom:8px;}
+.emo-row{display:flex;align-items:center;gap:10px;}
+.emo-slider{flex:1;height:4px;background:var(--border);border-radius:2px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.emo-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;}
+.emo-val{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--gold);width:28px;text-align:right;}
+.checklist{margin-bottom:14px;}
+.check-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.check-item:last-child{border-bottom:none;}
+.check-box{width:18px;height:18px;border:1px solid var(--border);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:12px;}
+.check-box.checked{background:var(--buy);border-color:var(--buy);color:#000;}
+.check-box.violated{background:var(--sell);border-color:var(--sell);color:#fff;}
+.check-text{font-size:14px;color:var(--text);}
+.check-item.checked .check-text{color:var(--buy);}
+.check-item.violated .check-text{color:var(--sell);text-decoration:line-through;}
+.lesson-box{background:rgba(212,168,83,.04);border:1px solid rgba(212,168,83,.15);border-radius:3px;padding:14px;margin-bottom:14px;}
+.lesson-title{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
+.save-btn{width:100%;padding:14px;background:var(--gold);border:none;color:var(--bg);font-family:'Orbitron',monospace;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;border-radius:3px;transition:all .3s;}
+.save-btn:hover{background:var(--gold2);}
+.entry-row{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:14px 18px;margin-bottom:10px;display:grid;grid-template-columns:60px 1fr auto auto;align-items:center;gap:14px;}
+.er-num{font-family:'Orbitron',monospace;font-size:11px;color:var(--dim);}
+.er-signal{font-size:13px;font-weight:700;margin-bottom:2px;}
+.er-signal.long{color:var(--buy);}
+.er-signal.short{color:var(--sell);}
+.er-lesson{font-size:12px;color:var(--dim);font-style:italic;}
+.er-pnl{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;text-align:right;}
+.er-pnl.profit{color:var(--buy);}
+.er-pnl.loss{color:var(--sell);}
+.er-outcome{padding:4px 10px;border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:10px;font-weight:700;}
+.er-outcome.win{background:rgba(0,217,126,.08);border:1px solid rgba(0,217,126,.2);color:var(--buy);}
+.er-outcome.loss{background:rgba(255,51,85,.08);border:1px solid rgba(255,51,85,.2);color:var(--sell);}
+.er-outcome.be{background:rgba(255,159,10,.08);border:1px solid rgba(255,159,10,.2);color:var(--warn);}
+.session-complete{display:none;}
+.close-charts{background:rgba(255,51,85,.04);border:1px solid rgba(255,51,85,.2);border-radius:3px;padding:20px 24px;margin-bottom:20px;text-align:center;}
+.cc-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:var(--sell);letter-spacing:2px;margin-bottom:10px;}
+.cc-msg{font-size:15px;color:var(--text);line-height:1.7;}
+.sc-warning{text-align:center;padding:50px 30px;background:var(--p1);border:1px solid var(--border);border-radius:3px;margin-bottom:24px;}
+.sc-pulse{width:80px;height:80px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px;animation:pulse 1.5s ease-in-out infinite;background:rgba(212,168,83,.06);}
+.sc-title{font-family:'Orbitron',monospace;font-size:clamp(18px,3.5vw,32px);font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:10px;line-height:1.2;}
+.sc-msg{font-size:18px;color:var(--text);line-height:1.8;max-width:560px;margin:0 auto 20px;font-style:italic;}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+.sum-card{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:14px;text-align:center;}
+.sum-val{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;}
+.sum-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--dim);margin-top:4px;}
+.debrief{background:var(--p1);border:1px solid rgba(212,168,83,.2);border-radius:3px;padding:20px 22px;margin-bottom:20px;}
+.debrief-title{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.debrief-body{font-size:16px;line-height:1.9;color:var(--text);font-style:italic;}
+.activities{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.act{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:16px;text-align:center;cursor:pointer;transition:all .3s;}
+.act:hover{border-color:var(--gold);}
+.act-icon{font-size:32px;margin-bottom:8px;}
+.act-name{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--dim);}
+.act-desc{font-size:12px;color:var(--dim);margin-top:4px;font-style:italic;}
+.analyzing{display:none;text-align:center;padding:40px 20px;}
+.a-spin{width:50px;height:50px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;margin:0 auto 16px;animation:spin .8s linear infinite;}
+.a-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);}
+.journal-reminder{background:rgba(212,168,83,.05);border:1px solid rgba(212,168,83,.15);border-radius:3px;padding:12px 16px;margin-bottom:16px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.5px;line-height:1.7;text-align:center;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,83,.4)}50%{box-shadow:0 0 0 12px rgba(212,168,83,0)}}
+@media(max-width:600px){.field-grid,.field-grid-3{grid-template-columns:1fr;}.emo-grid{grid-template-columns:1fr;}.activities{grid-template-columns:1fr 1fr;}.summary-grid{grid-template-columns:1fr 1fr;}.entry-row{grid-template-columns:40px 1fr auto;}.outcome-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<a href="index.html" class="back-btn">&#8592; HOME</a>
+<div class="page">
+<header class="hdr">
+  <div class="hdr-date" id="hdr-date"></div>
+  <h1 class="hdr-title">SmallChange <span>Journal</span></h1>
+  <p class="hdr-sub">Every trade &#8212; win or loss &#8212; deserves a record</p>
+</header>
+<div class="sbar" id="session-bar">
+  <div class="si"><div class="si-val o" id="sb-allowed">&#8212;</div><div class="si-lbl">ALLOWED</div></div>
+  <div class="si-div"></div>
+  <div class="si"><div class="si-val" id="sb-taken">0</div><div class="si-lbl">TAKEN</div></div>
+  <div class="si-div"></div>
+  <div class="si"><div class="si-val g" id="sb-wins">0</div><div class="si-lbl">WINS</div></div>
+  <div class="si-div"></div>
+  <div class="si"><div class="si-val r" id="sb-losses">0</div><div class="si-lbl">LOSSES</div></div>
+  <div class="si-div"></div>
+  <div class="si"><div class="si-val" id="sb-pnl">$0</div><div class="si-lbl">P&L</div></div>
+  <div class="si-div"></div>
+  <div class="neuro-pill" id="neuro-pill">&#8212;</div>
+</div>
+<div class="sh">Trade Slots</div>
+<div class="slot-row" id="slot-row"><span class="slot-label">Loading...</span></div>
+<div id="journal-section">
+  <div class="sh" id="journal-sh">Trade <span id="trade-num-lbl">1</span> &#8212; Log Your Trade</div>
+  <div class="journal-card">
+    <div class="jc-hdr"><div class="jc-num" id="jc-num">TRADE #1</div><div class="jc-time" id="jc-time"></div></div>
+    <div class="sh">Outcome</div>
+    <div class="outcome-row">
+      <button class="outcome-btn" id="ob-win" onclick="setOutcome('win')">&#10003; WIN</button>
+      <button class="outcome-btn" id="ob-loss" onclick="setOutcome('loss')">&#10007; LOSS</button>
+      <button class="outcome-btn" id="ob-be" onclick="setOutcome('be')">&#9898; BREAKEVEN</button>
+    </div>
+    <div class="sh">Trade Details</div>
+    <div class="field-grid-3">
+      <div class="field"><label>Asset</label><input type="text" id="j-asset" placeholder="BTC, RELIANCE..." value="BTC"/></div>
+      <div class="field"><label>Signal</label><select id="j-signal"><option value="">Select...</option><option value="LONG">&#128200; LONG</option><option value="SHORT">&#128201; SHORT</option></select></div>
+      <div class="field"><label>Entry Price</label><input type="number" id="j-entry" placeholder="e.g. 84200"/></div>
+      <div class="field"><label>Exit Price</label><input type="number" id="j-exit" placeholder="e.g. 84350"/></div>
+    </div>
+    <div class="field-grid">
+      <div class="field"><label>P&L ($)</label><input type="number" id="j-pnl" placeholder="e.g. 45 or -20"/></div>
+      <div class="field"><label>Hold Time</label><input type="text" id="j-hold" placeholder="e.g. 25 minutes"/></div>
+    </div>
+    <div class="sh">Emotions During Trade</div>
+    <div class="emo-grid">
+      <div class="emo-item"><div class="emo-lbl">FEAR</div><div class="emo-row"><input type="range" class="emo-slider" min="0" max="10" value="3" oninput="this.nextElementSibling.textContent=this.value"/><div class="emo-val">3</div></div></div>
+      <div class="emo-item"><div class="emo-lbl">GREED</div><div class="emo-row"><input type="range" class="emo-slider" min="0" max="10" value="3" oninput="this.nextElementSibling.textContent=this.value"/><div class="emo-val">3</div></div></div>
+      <div class="emo-item"><div class="emo-lbl">CONFIDENCE</div><div class="emo-row"><input type="range" class="emo-slider" min="0" max="10" value="6" oninput="this.nextElementSibling.textContent=this.value"/><div class="emo-val">6</div></div></div>
+      <div class="emo-item"><div class="emo-lbl">DISCIPLINE</div><div class="emo-row"><input type="range" class="emo-slider" min="0" max="10" value="7" oninput="this.nextElementSibling.textContent=this.value"/><div class="emo-val">7</div></div></div>
+    </div>
+    <div class="sh">Rule Checklist</div>
+    <div class="checklist" id="checklist">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">&#10003;</div><div class="check-text">I waited for all 3 timeframes to confirm</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">&#10003;</div><div class="check-text">I set stop-loss BEFORE entering</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">&#10003;</div><div class="check-text">I did NOT move my stop-loss</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">&#10003;</div><div class="check-text">I exited at my planned target or stop</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">&#10003;</div><div class="check-text">I was not emotionally triggered at entry</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">&#10003;</div><div class="check-text">Position size matched my risk plan</div></div>
+    </div>
+    <div class="sh">In Your Own Words</div>
+    <div class="field-grid">
+      <div class="field field-full"><label>What happened in this trade?</label><textarea id="j-what" placeholder="Chart pattern, entry reason, market context..."></textarea></div>
+      <div class="field"><label>What did you do RIGHT?</label><textarea id="j-right" placeholder="e.g. Waited for confirmation..." style="min-height:70px;"></textarea></div>
+      <div class="field"><label>What did you do WRONG?</label><textarea id="j-wrong" placeholder="e.g. Entered slightly early..." style="min-height:70px;"></textarea></div>
+    </div>
+    <div class="lesson-box">
+      <div class="lesson-title">&#128214; THE ONE LESSON FROM THIS TRADE</div>
+      <div class="field"><textarea id="j-lesson" placeholder="Win or loss &#8212; write ONE thing you learned..." style="min-height:80px;background:transparent;border:none;padding:4px 0;font-size:16px;font-style:italic;color:var(--bright);"></textarea></div>
+    </div>
+    <div class="journal-reminder" id="journal-reminder">&#128211; Keep journaling every trade &#8212; win or loss. This record is your most valuable trading asset.</div>
+    <button class="save-btn" id="save-btn" onclick="saveTrade()">&#128211; SAVE TRADE TO JOURNAL</button>
+  </div>
+</div>
+<div id="past-entries-section" style="display:none;margin-top:28px;">
+  <div class="sh">Previous Trades This Session</div>
+  <div id="past-entries"></div>
+</div>
+<div class="analyzing" id="analyzing"><div class="a-spin"></div><div class="a-title">GENERATING SESSION DEBRIEF...</div></div>
+<div class="session-complete" id="session-complete">
+  <div class="close-charts">
+    <div class="cc-title">&#9888; CLOSE YOUR CHARTS NOW</div>
+    <div class="cc-msg">You have completed your trades for today.<br/><strong style="color:var(--bright);">Every minute watching charts after your session costs you money.</strong><br/><strong style="color:var(--sell);">Close. The. Charts.</strong></div>
+  </div>
+  <div class="sc-warning">
+    <div class="sc-pulse">&#128721;</div>
+    <div class="sc-title">SESSION COMPLETE<br/>YOU ARE DONE FOR TODAY</div>
+    <div class="sc-msg">The market will be here tomorrow.<br/><strong>Your capital is protected.</strong><br/>You have done your job. Now go live your life.</div>
+  </div>
+  <div class="sh">Session Summary</div>
+  <div class="summary-grid" id="summary-grid"></div>
+  <div class="debrief" id="debrief-panel"><div class="debrief-title">&#129302; SMALLCHANGE AI SESSION DEBRIEF</div><div class="debrief-body" id="debrief-body">Generating...</div></div>
+  <div class="sh">Now Go Do Something Else</div>
+  <div class="activities">
+    <div class="act" onclick="selectActivity(this,'music')"><div class="act-icon">&#127925;</div><div class="act-name">MUSIC</div><div class="act-desc">Listen to something you love</div></div>
+    <div class="act" onclick="selectActivity(this,'movie')"><div class="act-icon">&#127916;</div><div class="act-name">MOVIE</div><div class="act-desc">Watch something great</div></div>
+    <div class="act" onclick="selectActivity(this,'walk')"><div class="act-icon">&#128694;</div><div class="act-name">WALK</div><div class="act-desc">Fresh air resets everything</div></div>
+    <div class="act" onclick="selectActivity(this,'food')"><div class="act-icon">&#127869;</div><div class="act-name">EAT WELL</div><div class="act-desc">Reward yourself properly</div></div>
+    <div class="act" onclick="selectActivity(this,'family')"><div class="act-icon">&#128106;</div><div class="act-name">FAMILY</div><div class="act-desc">Be present with people</div></div>
+    <div class="act" onclick="selectActivity(this,'game')"><div class="act-icon">&#127918;</div><div class="act-name">GAME</div><div class="act-desc">Play something fun</div></div>
+    <div class="act" onclick="selectActivity(this,'sleep')"><div class="act-icon">&#128564;</div><div class="act-name">REST</div><div class="act-desc">Sleep is your edge tomorrow</div></div>
+    <div class="act" onclick="selectActivity(this,'gym')"><div class="act-icon">&#127947;</div><div class="act-name">GYM</div><div class="act-desc">Move your body</div></div>
+  </div>
+  <div style="background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:18px 20px;margin-bottom:16px;text-align:center;">
+    <div style="font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:8px;">SEE YOU TOMORROW</div>
+    <div style="font-size:16px;color:var(--text);font-style:italic;line-height:1.7;"><strong style="color:var(--bright);">Survival today = Opportunity tomorrow.</strong></div>
+  </div>
+  <button onclick="newSession()" style="width:100%;padding:14px;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:3px;transition:all .3s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">&#8634; START NEW SESSION</button>
+</div>
+</div>
+<script>
+const RAILWAY_URL='https://small-change-production.up.railway.app';
+const ACTIVITIES={music:'&#127925; Great choice. Put on your favourite playlist and let the music take over.',movie:'&#127916; Perfect. Pick something you have been meaning to watch. You earned it.',walk:'&#128694; Even 20 minutes outside resets your nervous system. Go.',food:'&#127869; Eat something proper. Your brain needs fuel, not stress.',family:'&#128106; Be fully present. No phone, no charts. Just the people who matter.',game:'&#127918; A good game will pull your mind completely away from markets.',sleep:'&#128564; Sleep is not lazy &#8212; it is your edge tomorrow.',gym:'&#127947; Physical exertion is the fastest way to reset cortisol.'};
+let tradeAllowance=null,sessionTrades=[],currentOutcome=null,currentTradeNum=1;
+function init(){
+  document.getElementById('hdr-date').textContent=new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).toUpperCase();
+  try{const ta=localStorage.getItem('apexTradeAllowance');if(ta){const d=JSON.parse(ta);if(d.date===new Date().toDateString())tradeAllowance=d;}}catch(e){}
+  try{const st=localStorage.getItem('apexSessionTrades');if(st){const d=JSON.parse(st);if(d.date===new Date().toDateString()){sessionTrades=d.trades||[];currentTradeNum=sessionTrades.length+1;}}}catch(e){}
+  updateSessionBar();renderSlots();renderPastEntries();updateJournalHeader();
+  document.getElementById('jc-time').textContent=new Date().toLocaleTimeString();
+  if(tradeAllowance&&sessionTrades.length>=tradeAllowance.allowed&&tradeAllowance.allowed>0)showSessionComplete();
+}
+function updateSessionBar(){
+  const allowed=tradeAllowance?.allowed??'?';const verdict=tradeAllowance?.verdict||'UNKNOWN';
+  const wins=sessionTrades.filter(t=>t.outcome==='win').length;const losses=sessionTrades.filter(t=>t.outcome==='loss').length;
+  const pnl=sessionTrades.reduce((s,t)=>s+(parseFloat(t.pnl)||0),0);
+  document.getElementById('sb-allowed').textContent=allowed;document.getElementById('sb-taken').textContent=sessionTrades.length;
+  document.getElementById('sb-wins').textContent=wins;document.getElementById('sb-losses').textContent=losses;
+  const pEl=document.getElementById('sb-pnl');pEl.textContent=(pnl>=0?'+$':'-$')+Math.abs(pnl).toFixed(2);pEl.className='si-val '+(pnl>0?'g':pnl<0?'r':'');
+  const pill=document.getElementById('neuro-pill');pill.textContent=verdict;pill.className='neuro-pill '+verdict.toLowerCase();
+}
+function renderSlots(){
+  const allowed=tradeAllowance?.allowed??2;const row=document.getElementById('slot-row');
+  let html='';
+  for(let i=1;i<=Math.max(3,allowed);i++){const trade=sessionTrades[i-1];if(i>allowed){html+=`<div class="slot pending">&#8212;</div>`;}else if(trade){const cls=trade.outcome==='win'?'done-win':'done-loss';const icon=trade.outcome==='win'?'&#10003;':'&#10007;';html+=`<div class="slot ${cls}">${icon}</div>`;}else if(i===currentTradeNum&&i<=allowed){html+=`<div class="slot current">${i}</div>`;}else{html+=`<div class="slot pending">${i}</div>`;}}
+  const remaining=allowed-sessionTrades.length;html+=`<span class="slot-label">${remaining>0?remaining+' trade'+(remaining>1?'s':'')+' remaining':'Session complete'}</span>`;row.innerHTML=html;
+}
+function setOutcome(o){
+  currentOutcome=o;
+  document.getElementById('ob-win').className='outcome-btn'+(o==='win'?' sel-win':'');
+  document.getElementById('ob-loss').className='outcome-btn'+(o==='loss'?' sel-loss':'');
+  document.getElementById('ob-be').className='outcome-btn'+(o==='be'?' sel-be':'');
+  const reminder=document.getElementById('journal-reminder');
+  if(o==='loss'){reminder.style.borderColor='rgba(255,51,85,.3)';reminder.style.color='var(--sell)';reminder.innerHTML='&#10084; A loss is not failure. A loss without a lesson is. Write honestly.';}
+  else if(o==='win'){reminder.style.borderColor='rgba(0,217,126,.3)';reminder.style.color='var(--buy)';reminder.innerHTML='&#10003; A win is only repeatable if you know exactly WHY it worked.';}
+  else{reminder.style.borderColor='rgba(212,168,83,.15)';reminder.style.color='var(--gold)';reminder.innerHTML='&#9898; Breakeven is discipline. Capital protected.';}
+}
+function toggleCheck(el){const box=el.querySelector('.check-box');if(!el.dataset.state||el.dataset.state==='unchecked'){el.dataset.state='checked';box.innerHTML='&#10003;';box.className='check-box checked';el.classList.add('checked');el.classList.remove('violated');}else if(el.dataset.state==='checked'){el.dataset.state='violated';box.innerHTML='&#10007;';box.className='check-box violated';el.classList.add('violated');el.classList.remove('checked');}else{el.dataset.state='unchecked';box.innerHTML='&#10003;';box.className='check-box';el.classList.remove('checked','violated');}}
+function getChecklistSummary(){const items=document.querySelectorAll('#checklist .check-item');const followed=[],violated=[];items.forEach(item=>{const text=item.querySelector('.check-text').textContent;if(item.dataset.state==='checked')followed.push(text);if(item.dataset.state==='violated')violated.push(text);});return{followed,violated};}
+function saveTrade(){
+  if(!currentOutcome){alert('Please select WIN, LOSS, or BREAKEVEN first.');return;}
+  const entry=parseFloat(document.getElementById('j-entry').value)||0;const exit=parseFloat(document.getElementById('j-exit').value)||0;
+  const pnl=parseFloat(document.getElementById('j-pnl').value)||(exit-entry);
+  const checks=getChecklistSummary();
+  const sliders=document.querySelectorAll('.emo-slider');
+  const trade={id:currentTradeNum,time:new Date().toLocaleTimeString(),outcome:currentOutcome,asset:document.getElementById('j-asset')?.value||'BTC',signal:document.getElementById('j-signal').value||'&#8212;',entry,exit,pnl,hold:document.getElementById('j-hold').value||'&#8212;',emotions:{fear:sliders[0]?.value||3,greed:sliders[1]?.value||3,conf:sliders[2]?.value||6,disc:sliders[3]?.value||7},rules_followed:checks.followed,rules_violated:checks.violated,what:document.getElementById('j-what').value||'',right:document.getElementById('j-right').value||'',wrong:document.getElementById('j-wrong').value||'',lesson:document.getElementById('j-lesson').value||''};
+  sessionTrades.push(trade);currentTradeNum++;
+  localStorage.setItem('apexSessionTrades',JSON.stringify({date:new Date().toDateString(),trades:sessionTrades}));
+  if(tradeAllowance){tradeAllowance.used=sessionTrades.length;localStorage.setItem('apexTradeAllowance',JSON.stringify(tradeAllowance));}
+  updateSessionBar();renderSlots();renderPastEntries();resetJournalForm();
+  const allowed=tradeAllowance?.allowed??999;
+  if(sessionTrades.length>=allowed&&allowed>0){setTimeout(()=>showSessionComplete(),600);}else{updateJournalHeader();showNextTradeNotification(trade);}
+}
+function showNextTradeNotification(lastTrade){
+  const remaining=(tradeAllowance?.allowed??2)-sessionTrades.length;
+  const msgs={win:`&#10003; Trade ${lastTrade.id} logged as WIN. ${remaining} trade${remaining>1?'s':''} remaining.`,loss:`&#128211; Trade ${lastTrade.id} logged as LOSS. ${remaining} trade${remaining>1?'s':''} remaining &#8212; reset your mind.`,be:`&#9898; Trade ${lastTrade.id} logged as BREAKEVEN. ${remaining} trade${remaining>1?'s':''} remaining.`};
+  const n=document.getElementById('journal-reminder');n.style.display='block';n.innerHTML=msgs[lastTrade.outcome]||'';n.style.color=lastTrade.outcome==='win'?'var(--buy)':lastTrade.outcome==='loss'?'var(--sell)':'var(--warn)';
+}
+function resetJournalForm(){
+  currentOutcome=null;
+  ['ob-win','ob-loss','ob-be'].forEach(id=>document.getElementById(id).className='outcome-btn');
+  ['j-asset','j-signal','j-entry','j-exit','j-pnl','j-hold','j-what','j-right','j-wrong','j-lesson'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('j-asset').value='BTC';
+  document.querySelectorAll('.emo-slider').forEach(s=>s.value=5);
+  document.querySelectorAll('.emo-val').forEach(v=>v.textContent='5');
+  document.querySelectorAll('.check-item').forEach(el=>{el.dataset.state='unchecked';const box=el.querySelector('.check-box');box.innerHTML='&#10003;';box.className='check-box';el.classList.remove('checked','violated');});
+  document.getElementById('jc-time').textContent=new Date().toLocaleTimeString();
+}
+function updateJournalHeader(){const n=currentTradeNum;document.getElementById('trade-num-lbl').textContent=n;document.getElementById('jc-num').textContent=`TRADE #${n}`;const allowed=tradeAllowance?.allowed??'?';document.getElementById('journal-sh').innerHTML=`Trade <span id="trade-num-lbl">${n}</span> of ${allowed} &#8212; Log Your Trade`;}
+function renderPastEntries(){if(!sessionTrades.length)return;document.getElementById('past-entries-section').style.display='block';const el=document.getElementById('past-entries');el.innerHTML=sessionTrades.slice().reverse().map(t=>{const sigCls=t.signal==='LONG'?'long':'short';const pnlCls=t.outcome==='win'?'profit':t.outcome==='loss'?'loss':'be';const pnlStr=(t.pnl>=0?'+$':'-$')+Math.abs(parseFloat(t.pnl)||0).toFixed(2);return`<div class="entry-row"><div class="er-num">TRADE #${t.id}<br/><span style="font-size:9px;color:var(--dim)">${t.time}</span></div><div><div class="er-signal ${sigCls}">${t.signal} ${t.asset||'BTC'} &#8212; $${t.entry} &#8594; $${t.exit}</div><div class="er-lesson">${t.lesson||'No lesson recorded'}</div></div><div class="er-pnl ${pnlCls}">${pnlStr}</div><div class="er-outcome ${t.outcome}">${t.outcome.toUpperCase()}</div></div>`;}).join('');}
+async function showSessionComplete(){
+  document.getElementById('journal-section').style.display='none';document.getElementById('session-complete').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
+  const wins=sessionTrades.filter(t=>t.outcome==='win').length;const losses=sessionTrades.filter(t=>t.outcome==='loss').length;const be=sessionTrades.filter(t=>t.outcome==='be').length;const total=sessionTrades.length;const pnl=sessionTrades.reduce((s,t)=>s+(parseFloat(t.pnl)||0),0);const wr=total>0?Math.round((wins/total)*100):0;
+  document.getElementById('summary-grid').innerHTML=[{lbl:'TRADES',val:total,color:'var(--bright)'},{lbl:'WIN RATE',val:wr+'%',color:wr>=60?'var(--buy)':'var(--sell)'},{lbl:'P&L',val:(pnl>=0?'+$':'-$')+Math.abs(pnl).toFixed(2),color:pnl>=0?'var(--buy)':'var(--sell)'},{lbl:'RULES FOLLOWED',val:sessionTrades.reduce((s,t)=>s+(t.rules_followed?.length||0),0),color:'var(--gold)'}].map(c=>`<div class="sum-card"><div class="sum-val" style="color:${c.color}">${c.val}</div><div class="sum-lbl">${c.lbl}</div></div>`).join('');
+  generateDebrief(wins,losses,be,pnl,wr);
+}
+async function generateDebrief(wins,losses,be,pnl,wr){
+  document.getElementById('analyzing').style.display='block';document.getElementById('debrief-panel').style.display='none';
+  const assets=[...new Set(sessionTrades.map(t=>t.asset||'BTC'))].join(', ');
+  const violations=sessionTrades.flatMap(t=>t.rules_violated||[]);
+  const prompt=`You are SmallChange AI trading psychologist. Write a personal end-of-session debrief.
+SESSION: Assets=${assets}, Wins=${wins}, Losses=${losses}, Breakeven=${be}, Win rate=${wr}%, P&L=$${pnl.toFixed(2)}, Rules violated=${violations.length>0?violations.join(', '):'None'}.
+Write 4-5 sentences, personal and honest. If won acknowledge but warn overconfidence. If lost be compassionate but direct. End with one powerful sentence about tomorrow. Second person "You...". Under 120 words.`;
+  try{
+    const res=await fetch(`${RAILWAY_URL}/api/analyze`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:200,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();const text=data.content?.map(b=>b.text||'').join('')||'';
+    document.getElementById('analyzing').style.display='none';document.getElementById('debrief-panel').style.display='block';document.getElementById('debrief-body').textContent=text;
+  }catch(e){
+    document.getElementById('analyzing').style.display='none';document.getElementById('debrief-panel').style.display='block';
+    document.getElementById('debrief-body').textContent=`You completed your trading session today. ${wins} win${wins!==1?'s':''}, ${losses} loss${losses!==1?'es':''}. ${pnl>=0?'You ended in profit &#8212; protect that discipline tomorrow.':'The loss stings but you journaled it. Come back tomorrow reset and execute cleanly.'}`;
+  }
+}
+function selectActivity(el,type){document.querySelectorAll('.act').forEach(a=>{a.style.borderColor='var(--border)';a.style.boxShadow='';});el.style.borderColor='var(--gold)';el.style.boxShadow='0 0 20px rgba(212,168,83,.2)';const msg=ACTIVITIES[type];let msgEl=document.getElementById('activity-msg');if(!msgEl){msgEl=document.createElement('div');msgEl.id='activity-msg';msgEl.style.cssText='margin-top:16px;padding:14px 18px;background:rgba(212,168,83,.06);border:1px solid rgba(212,168,83,.2);border-radius:3px;font-size:16px;color:var(--bright);font-style:italic;text-align:center;line-height:1.7;';el.closest('.activities').after(msgEl);}msgEl.innerHTML=msg;}
+function newSession(){localStorage.removeItem('apexSessionTrades');localStorage.removeItem('apexTradeAllowance');sessionTrades=[];currentTradeNum=1;tradeAllowance=null;document.getElementById('session-complete').style.display='none';document.getElementById('journal-section').style.display='block';document.getElementById('past-entries-section').style.display='none';resetJournalForm();updateSessionBar();renderSlots();updateJournalHeader();window.scrollTo({top:0,behavior:'smooth'});}
+init();
+</script>
+</body>
+</html>
