@@ -1,19 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 const KEY = process.env.ANTHROPIC_API_KEY;
-
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
-
 app.get('/', (req, res) => {
-  res.json({ status: 'SmallChange API running' });
+  res.json({ status: 'SmallChange API running', key_loaded: KEY ? 'YES' : 'NO' });
 });
-
 app.post('/api/analyze', async (req, res) => {
+  if (!KEY) return res.status(500).json({ error: 'API key not set in Railway variables' });
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -31,7 +28,4 @@ app.post('/api/analyze', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-app.listen(PORT, () => {
-  console.log(`SmallChange proxy running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Running on ${PORT} | Key: ${KEY ? 'YES' : 'NO'}`));
