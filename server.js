@@ -23,8 +23,12 @@ app.post('/api/analyze', async (req, res) => {
       body: JSON.stringify(req.body)
     });
     const data = await response.json();
+    if (!response.ok) {
+      console.error('Anthropic error:', JSON.stringify(data));
+    }
     res.status(response.status).json(data);
   } catch (err) {
+    console.error('Fetch error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
