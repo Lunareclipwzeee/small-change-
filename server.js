@@ -10,13 +10,13 @@ app.get('/', (req, res) => {
   res.json({ status: 'SmallChange API running', key_loaded: KEY ? 'YES' : 'NO' });
 });
 app.post('/api/analyze', async (req, res) => {
-  if (!KEY) return res.status(500).json({ error: 'API key not set in Railway variables' });
+  if (!KEY) return res.status(500).json({ error: 'API key not set' });
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': KEY,
+        'x-api-key': KEY.trim(),
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
