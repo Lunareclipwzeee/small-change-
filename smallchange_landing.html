@@ -3,243 +3,258 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SmallChange - The Emotionally Intelligent Trading System</title>
+<title>SmallChange - The Worlds First Trader Psychological Guardian</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#080808;--bg2:#0f0f0f;--bg3:#141414;--border:#1e1e1e;--gold:#c8973a;--gold2:#e8b84b;--green:#1db954;--red:#e63946;--white:#f0f0f0;--dim:#555;--text:#999;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(8,8,8,.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
-.logo{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:4px;color:var(--white);}
+.logo{font-family:"Bebas Neue",cursive;font-size:22px;letter-spacing:4px;color:var(--white);}
 .logo span{color:var(--gold);}
-.nav-cta{background:var(--gold);color:#000;border:none;padding:9px 22px;border-radius:2px;cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;transition:all .3s;}
+.nav-cta{background:var(--gold);color:#000;border:none;padding:9px 22px;border-radius:2px;cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;}
 .nav-cta:hover{background:var(--gold2);}
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 24px 80px;text-align:center;position:relative;overflow:hidden;}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,151,58,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,151,58,.03) 1px,transparent 1px);background-size:50px 50px;}
-.hero-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,151,58,.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);}
 .hero-content{position:relative;z-index:1;}
-.eyebrow{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:6px;color:var(--gold);margin-bottom:20px;opacity:.8;}
-h1{font-family:'Bebas Neue',cursive;font-size:clamp(56px,11vw,120px);line-height:.92;letter-spacing:2px;color:var(--white);margin-bottom:14px;}
+.eyebrow{font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:6px;color:var(--gold);margin-bottom:20px;opacity:.8;}
+h1{font-family:"Bebas Neue",cursive;font-size:clamp(52px,10vw,110px);line-height:.92;letter-spacing:2px;color:var(--white);margin-bottom:14px;}
 h1 .outline{-webkit-text-stroke:1px var(--gold);color:transparent;}
-.hero-sub{font-size:clamp(16px,2.5vw,19px);color:var(--text);max-width:540px;margin:0 auto 10px;line-height:1.7;font-weight:300;}
+.hero-sub{font-size:clamp(16px,2.5vw,20px);color:var(--text);max-width:580px;margin:0 auto 10px;line-height:1.7;font-weight:300;}
 .hero-sub strong{color:var(--white);font-weight:500;}
-.hero-warn{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--red);letter-spacing:2px;margin-bottom:44px;}
+.hero-warn{font-family:"Share Tech Mono",monospace;font-size:11px;color:var(--red);letter-spacing:2px;margin-bottom:44px;}
 .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
-.btn-gold{background:var(--gold);color:#000;border:none;padding:15px 34px;border-radius:2px;cursor:pointer;font-size:15px;font-weight:500;text-decoration:none;transition:all .3s;display:inline-block;}
+.btn-gold{background:var(--gold);color:#000;border:none;padding:15px 34px;border-radius:2px;cursor:pointer;font-size:15px;font-weight:500;text-decoration:none;display:inline-block;}
 .btn-gold:hover{background:var(--gold2);}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);padding:15px 34px;border-radius:2px;cursor:pointer;font-size:15px;text-decoration:none;transition:all .3s;display:inline-block;}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);padding:15px 34px;border-radius:2px;font-size:15px;text-decoration:none;display:inline-block;}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
-.hero-note{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;}
+.hero-note{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);letter-spacing:1px;}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .stat{padding:32px 20px;text-align:center;border-right:1px solid var(--border);}
 .stat:last-child{border-right:none;}
-.stat-n{font-family:'Bebas Neue',cursive;font-size:50px;color:var(--white);line-height:1;}
+.stat-n{font-family:"Bebas Neue",cursive;font-size:50px;color:var(--white);line-height:1;}
 .stat-n span{color:var(--gold);}
 .stat-l{font-size:12px;color:var(--dim);margin-top:4px;}
-.sec{padding:90px 24px;max-width:1080px;margin:0 auto;}
-.sec-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.7;margin-bottom:14px;}
-.sec-title{font-family:'Bebas Neue',cursive;font-size:clamp(36px,6vw,64px);color:var(--white);letter-spacing:2px;line-height:1.05;margin-bottom:18px;}
-.sec-sub{font-size:17px;color:var(--text);max-width:560px;line-height:1.75;font-weight:300;margin-bottom:50px;}
-.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-.prob-card{background:var(--bg2);padding:34px 26px;}
-.prob-icon{font-size:30px;margin-bottom:14px;}
-.prob-title{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:1px;color:var(--white);margin-bottom:8px;}
-.prob-text{font-size:14px;color:var(--dim);line-height:1.7;}
-.prob-stat{margin-top:14px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--red);letter-spacing:1px;}
-.sol-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.sol-inner{max-width:1080px;margin:0 auto;padding:90px 24px;}
-.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);}
-.tool{background:var(--bg);padding:38px 34px;position:relative;transition:background .3s;}
-.tool:hover{background:var(--bg3);}
-.tool::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;transition:background .3s;}
-.tool:hover::before{background:var(--gold);}
-.tool-num{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:18px;}
-.tool-icon{font-size:34px;margin-bottom:14px;}
-.tool-name{font-family:'Bebas Neue',cursive;font-size:26px;letter-spacing:1px;color:var(--white);margin-bottom:8px;}
-.tool-desc{font-size:14px;color:var(--dim);line-height:1.75;margin-bottom:14px;}
+.sec{padding:90px 24px;max-width:1100px;margin:0 auto;}
+.sec-tag{font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.7;margin-bottom:14px;}
+.sec-title{font-family:"Bebas Neue",cursive;font-size:clamp(36px,6vw,68px);color:var(--white);letter-spacing:2px;line-height:1.05;margin-bottom:18px;}
+.sec-sub{font-size:17px;color:var(--text);max-width:580px;line-height:1.75;font-weight:300;margin-bottom:60px;}
+.truth-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.truth-card{background:var(--bg2);padding:36px 28px;}
+.truth-icon{font-size:32px;margin-bottom:16px;}
+.truth-title{font-family:"Bebas Neue",cursive;font-size:22px;color:var(--white);margin-bottom:10px;}
+.truth-text{font-size:14px;color:var(--dim);line-height:1.75;}
+.truth-quote{margin-top:16px;font-size:13px;color:var(--gold);font-style:italic;padding-left:12px;border-left:2px solid rgba(200,151,58,.3);}
+.wwa-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.wwa-inner{max-width:1100px;margin:0 auto;padding:90px 24px;}
+.wwa-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+.wwa-card{background:var(--bg);padding:40px 36px;position:relative;transition:background .3s;}
+.wwa-card:hover{background:var(--bg3);}
+.wwa-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;transition:background .3s;}
+.wwa-card:hover::before{background:var(--gold);}
+.wwa-num{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:18px;}
+.wwa-icon{font-size:36px;margin-bottom:16px;}
+.wwa-name{font-family:"Bebas Neue",cursive;font-size:28px;color:var(--white);margin-bottom:10px;}
+.wwa-desc{font-size:14px;color:var(--dim);line-height:1.75;margin-bottom:16px;}
 .tags{display:flex;flex-wrap:wrap;gap:6px;}
-.tag{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;padding:3px 9px;background:rgba(200,151,58,.05);border:1px solid rgba(200,151,58,.15);color:var(--gold);border-radius:1px;}
-.price-wrap{max-width:820px;margin:0 auto;}
-.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:3px;overflow:hidden;position:relative;}
-.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));}
-.price-top{padding:44px 44px 32px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;}
-.price-badge{display:inline-block;background:rgba(200,151,58,.1);border:1px solid rgba(200,151,58,.25);color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;padding:3px 11px;margin-bottom:14px;}
-.price-name{font-family:'Bebas Neue',cursive;font-size:34px;letter-spacing:2px;color:var(--white);margin-bottom:7px;}
-.price-desc{font-size:14px;color:var(--dim);line-height:1.6;max-width:400px;}
+.tag{font-family:"Share Tech Mono",monospace;font-size:9px;padding:3px 9px;background:rgba(200,151,58,.05);border:1px solid rgba(200,151,58,.15);color:var(--gold);border-radius:1px;}
+.patterns{display:flex;flex-direction:column;}
+.pattern{display:grid;grid-template-columns:60px 1fr auto;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);align-items:start;}
+.pattern:last-child{border-bottom:none;}
+.p-num{font-family:"Bebas Neue",cursive;font-size:40px;color:var(--border);line-height:1;}
+.p-name{font-family:"Bebas Neue",cursive;font-size:22px;color:var(--white);margin-bottom:6px;}
+.p-desc{font-size:14px;color:var(--dim);line-height:1.7;}
+.p-quote{margin-top:8px;font-size:12px;color:var(--gold);font-style:italic;}
+.p-book{font-family:"Share Tech Mono",monospace;font-size:9px;color:var(--dim);margin-top:4px;}
+.p-badge{font-family:"Share Tech Mono",monospace;font-size:9px;padding:4px 10px;border-radius:2px;white-space:nowrap;align-self:center;}
+.p-badge.high{background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.2);color:var(--red);}
+.p-badge.med{background:rgba(200,151,58,.1);border:1px solid rgba(200,151,58,.2);color:var(--gold);}
+.books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.book-card{background:var(--bg2);padding:28px 24px;}
+.book-icon{font-size:32px;margin-bottom:12px;}
+.book-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.book-author{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--gold);margin-bottom:8px;}
+.book-insight{font-size:13px;color:var(--dim);line-height:1.6;}
+.price-wrap{max-width:680px;margin:0 auto;}
+.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;}
+.price-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.price-top{padding:48px 48px 36px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;}
+.price-badge{display:inline-block;background:rgba(200,151,58,.1);border:1px solid rgba(200,151,58,.25);color:var(--gold);font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:2px;padding:4px 12px;margin-bottom:14px;}
+.price-name{font-family:"Bebas Neue",cursive;font-size:36px;color:var(--white);margin-bottom:8px;}
+.price-desc{font-size:14px;color:var(--dim);line-height:1.6;max-width:340px;}
 .price-right{text-align:right;}
-.price-orig{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--dim);text-decoration:line-through;margin-bottom:3px;}
-.price-main{font-family:'Bebas Neue',cursive;font-size:50px;color:var(--white);line-height:1;}
-.price-main span{font-size:22px;color:var(--gold);}
-.price-per{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:2px;margin-top:3px;}
-.price-feats{padding:0 44px 32px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.price-orig{font-family:"Share Tech Mono",monospace;font-size:13px;color:var(--dim);text-decoration:line-through;margin-bottom:4px;}
+.price-main{font-family:"Bebas Neue",cursive;font-size:56px;color:var(--white);line-height:1;}
+.price-main span{font-size:24px;color:var(--gold);}
+.price-period{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:4px;}
+.price-feats{padding:0 48px 36px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .pf{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--text);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .pf-ok{color:var(--green);flex-shrink:0;}
-.price-btn{padding:0 44px 44px;}
-.price-btn .btn-gold{width:100%;text-align:center;font-size:15px;padding:17px;letter-spacing:2px;}
-.price-note{text-align:center;margin-top:12px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1px;}
-.faq{max-width:680px;margin:0 auto;}
+.price-btn{padding:0 48px 48px;}
+.price-btn .btn-gold{width:100%;text-align:center;font-size:16px;padding:18px;letter-spacing:2px;}
+.price-note{text-align:center;margin-top:14px;font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);}
+.faq{max-width:700px;margin:0 auto;}
 .faq-item{border-bottom:1px solid var(--border);}
-.faq-q{padding:20px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:14px;}
+.faq-q{padding:22px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:16px;}
 .faq-q-t{font-size:16px;color:var(--white);}
-.faq-plus{font-family:'Share Tech Mono',monospace;font-size:18px;color:var(--gold);transition:transform .3s;flex-shrink:0;}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
-.faq-a-in{padding:0 0 20px;font-size:14px;color:var(--dim);line-height:1.8;}
+.faq-plus{font-family:"Share Tech Mono",monospace;font-size:18px;color:var(--gold);transition:transform .3s;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.faq-a-in{padding:0 0 22px;font-size:14px;color:var(--dim);line-height:1.8;}
 .faq-item.open .faq-plus{transform:rotate(45deg);}
-.faq-item.open .faq-a{max-height:180px;}
+.faq-item.open .faq-a{max-height:200px;}
 .cta-section{background:var(--bg2);border-top:1px solid var(--border);padding:90px 24px;}
-.cta-inner{max-width:620px;margin:0 auto;text-align:center;}
+.cta-inner{max-width:640px;margin:0 auto;text-align:center;}
 .trial-box{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:24px;margin:28px 0;text-align:left;}
 .trial-row{display:flex;gap:14px;font-size:14px;color:var(--text);margin-bottom:12px;}
-.trial-row:last-child{margin-bottom:0;}
-.contact-row{padding-top:24px;border-top:1px solid var(--border);}
-.contact-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:3px;margin-bottom:14px;}
-.contact-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-.wa-btn{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#000;border:none;padding:12px 22px;border-radius:2px;cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;}
+.wa-btn{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#000;padding:12px 22px;border-radius:2px;font-size:13px;font-weight:500;text-decoration:none;}
 .email-btn{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);color:var(--text);border:1px solid var(--border);padding:12px 22px;border-radius:2px;font-size:13px;text-decoration:none;}
-.email-btn:hover{border-color:var(--gold);color:var(--gold);}
-footer{border-top:1px solid var(--border);padding:40px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
-.foot-logo{font-family:'Bebas Neue',cursive;font-size:19px;letter-spacing:4px;color:var(--white);}
+footer{border-top:1px solid var(--border);padding:48px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.foot-logo{font-family:"Bebas Neue",cursive;font-size:20px;letter-spacing:4px;color:var(--white);}
 .foot-logo span{color:var(--gold);}
-.foot-links{display:flex;gap:22px;}
+.foot-links{display:flex;gap:24px;}
 .foot-links a{font-size:13px;color:var(--dim);text-decoration:none;}
 .foot-links a:hover{color:var(--gold);}
-.foot-copy{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.foot-copy{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:none;}
-@media(max-width:768px){
-  nav{padding:14px 16px;}
-  .stats{grid-template-columns:1fr 1fr;}
-  .prob-grid,.tools{grid-template-columns:1fr;}
-  .price-top{grid-template-columns:1fr;}
-  .price-right{text-align:left;}
-  .price-feats{grid-template-columns:1fr;}
-  .price-top,.price-feats,.price-btn{padding-left:24px;padding-right:24px;}
-  .sec{padding:60px 18px;}
-  .sol-inner{padding:60px 18px;}
-  .hero{padding:100px 18px 60px;}
-}
+@media(max-width:768px){nav{padding:14px 18px;}.stats{grid-template-columns:1fr 1fr;}.truth-grid,.wwa-grid,.books-grid{grid-template-columns:1fr;}.price-top{grid-template-columns:1fr;}.price-right{text-align:left;}.price-feats{grid-template-columns:1fr;}.price-top,.price-feats,.price-btn{padding-left:24px;padding-right:24px;}.sec{padding:60px 18px;}.wwa-inner{padding:60px 18px;}.hero{padding:100px 18px 60px;}.pattern{grid-template-columns:40px 1fr;}.p-badge{display:none;}}
 </style>
 </head>
 <body>
-<nav>
-  <div class="logo">&#9889; <span>Small</span>Change</div>
-  <a href="#start" class="nav-cta">Start Free &rarr;</a>
-</nav>
+<nav><div class="logo">&#9889; <span>Small</span>Change</div><a href="#start" class="nav-cta">Start Free</a></nav>
 <section class="hero" id="home">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-content">
-    <div class="eyebrow">Introducing SmallChange Trading System</div>
-    <h1>Stop Trading<br/><span class="outline">With Emotions.</span></h1>
-    <p class="hero-sub">The world's first trading system that checks <strong>your psychology</strong> before analyzing charts. Built by a trader who lost money the same way you do.</p>
-    <div class="hero-warn">&#9888; 90% OF TRADERS LOSE MONEY &mdash; THE REASON IS NOT STRATEGY</div>
-    <div class="btn-row">
-      <a href="index.html" class="btn-gold">Start Free &mdash; 7 Days &rarr;</a>
-      <a href="#solution" class="btn-outline">See How It Works</a>
-    </div>
-    <div class="hero-note">FREE for 7 days &middot; No card &middot; Crypto &middot; Stocks &middot; Forex &middot; Commodities</div>
-  </div>
+<div class="hero-grid"></div>
+<div class="hero-content">
+<div class="eyebrow">SmallChange - Trader Psychological Guardian</div>
+<h1>We Do Not Fix<br/><span class="outline">Your Strategy.</span><br/>We Fix You.</h1>
+<p class="hero-sub">The world's first psychological discipline system for traders. <strong>Not signals. Not charts.</strong> The missing layer every trader needs but nobody built.</p>
+<div class="hero-warn">90% OF TRADERS LOSE BECAUSE OF EMOTIONS - NOT BAD STRATEGY</div>
+<div class="btn-row"><a href="index.html" class="btn-gold">Start Free 7 Days</a><a href="#what" class="btn-outline">See How It Works</a></div>
+<div class="hero-note">Rs.109/month - No card - Works with any trading app - Any market</div>
+</div>
 </section>
 <div class="stats reveal">
-  <div class="stat"><div class="stat-n"><span>90</span>%</div><div class="stat-l">Traders lose money</div></div>
-  <div class="stat"><div class="stat-n"><span>80</span>%</div><div class="stat-l">Losses caused by emotion</div></div>
-  <div class="stat"><div class="stat-n"><span>4</span></div><div class="stat-l">Tools in one system</div></div>
-  <div class="stat"><div class="stat-n"><span>0</span></div><div class="stat-l">Tools like this exist</div></div>
+<div class="stat"><div class="stat-n"><span>90</span>%</div><div class="stat-l">Traders lose money</div></div>
+<div class="stat"><div class="stat-n"><span>80</span>%</div><div class="stat-l">Losses caused by emotion</div></div>
+<div class="stat"><div class="stat-n"><span>7</span></div><div class="stat-l">Psychological patterns detected</div></div>
+<div class="stat"><div class="stat-n"><span>0</span></div><div class="stat-l">Tools like this exist</div></div>
 </div>
-<section class="sec" id="problem">
-  <div class="sec-tag reveal">THE REAL PROBLEM</div>
-  <h2 class="sec-title reveal">You Don't Have A Strategy Problem.</h2>
-  <p class="sec-sub reveal">Every trader who fails says the same thing &mdash; my strategy was right but I didn't follow it. That's not a strategy problem. That's a psychology problem.</p>
-  <div class="prob-grid reveal">
-    <div class="prob-card"><div class="prob-icon">&#128544;</div><div class="prob-title">Revenge Trading</div><div class="prob-text">You lose one trade. Your brain activates the same region as physical pain. You trade again immediately. You lose more.</div><div class="prob-stat">&rarr; MOST COMMON ACCOUNT KILLER</div></div>
-    <div class="prob-card"><div class="prob-icon">&#128552;</div><div class="prob-title">Emotional Override</div><div class="prob-text">Your strategy says SELL. Your gut says it will come back. You hold. The loss grows beyond your risk limit.</div><div class="prob-stat">&rarr; 73% OF TRADERS ADMIT THIS</div></div>
-    <div class="prob-card"><div class="prob-icon">&#128247;</div><div class="prob-title">Overtrading</div><div class="prob-text">No plan. No limit. You watch charts for 8 hours and take 15 trades. Quality drops after trade 3.</div><div class="prob-stat">&rarr; QUALITY DROPS 60% AFTER 3 TRADES</div></div>
-  </div>
+<section class="sec" id="truth">
+<div class="sec-tag reveal">THE TRUTH</div>
+<h2 class="sec-title reveal">Your Strategy Is Fine. Your Psychology Is Not.</h2>
+<p class="sec-sub reveal">Every trader who fails says the same thing - my strategy was right but I did not follow it. That is not a strategy problem. That is a psychology problem.</p>
+<div class="truth-grid reveal">
+<div class="truth-card"><div class="truth-icon">&#129504;</div><div class="truth-title">The Real Problem</div><div class="truth-text">When emotion fires, the rational brain goes offline. You know the rules. You break them anyway. No trading tool on earth accounts for that.</div><div class="truth-quote">The market does not beat traders. Traders beat themselves. - Jesse Livermore</div></div>
+<div class="truth-card"><div class="truth-icon">&#128270;</div><div class="truth-title">50 Years of Research</div><div class="truth-text">Trading in the Zone, Market Wizards - every great trading psychology book identifies the same 7 patterns that destroy traders. Nobody built a system to detect them in real time. Until now.</div><div class="truth-quote">The solution is not a better strategy. It is a better mind. - Mark Douglas</div></div>
+<div class="truth-card"><div class="truth-icon">&#127919;</div><div class="truth-title">What SmallChange Does</div><div class="truth-text">SmallChange detects which of the 7 psychological patterns is active in you right now. Before you make the mistake. It intervenes with wisdom from the greatest trading psychologists in history.</div><div class="truth-quote">Awareness is the beginning of change. - Brett Steenbarger</div></div>
+</div>
 </section>
-<div class="sol-bg" id="solution">
-<div class="sol-inner">
-  <div class="sec-tag reveal">THE SMALLCHANGE SYSTEM</div>
-  <h2 class="sec-title reveal">4 Tools. One System. Zero Excuses.</h2>
-  <p class="sec-sub reveal">SmallChange is not just a chart analyzer. It is a complete trading operating system.</p>
-  <div class="tools reveal">
-    <div class="tool"><div class="tool-num">TOOL 01</div><div class="tool-icon">&#129504;</div><div class="tool-name">NeuroTrader</div><div class="tool-desc">14-question psychological assessment before every session. Gives you a clearance score and daily trade limit based on your mental state.</div><div class="tags"><span class="tag">EMOTION FINGERPRINT</span><span class="tag">TRADE ALLOWANCE</span><span class="tag">NEURO SCORE</span></div></div>
-    <div class="tool"><div class="tool-num">TOOL 02</div><div class="tool-icon">&#128202;</div><div class="tool-name">AI Chart Analyzer</div><div class="tool-desc">Upload your 5min + 1H + 4H TradingView charts. AI reads pure price action. Always gives LONG or SHORT with entry, stop-loss and take-profit.</div><div class="tags"><span class="tag">7-LAYER ANALYSIS</span><span class="tag">MULTI-TIMEFRAME</span><span class="tag">ENTRY + SL + TP</span></div></div>
-    <div class="tool"><div class="tool-num">TOOL 03</div><div class="tool-icon">&#128221;</div><div class="tool-name">Trade Journal</div><div class="tool-desc">Log every trade &mdash; win or loss. Rate emotions. Check rule compliance. APEX warns you to close charts when session is complete.</div><div class="tags"><span class="tag">EMOTION TRACKING</span><span class="tag">AI DEBRIEF</span><span class="tag">CLOSE CHARTS WARNING</span></div></div>
-    <div class="tool"><div class="tool-num">TOOL 04</div><div class="tool-icon">&#128300;</div><div class="tool-name">Backtest Engine</div><div class="tool-desc">Upload charts from 1 week ago. AI analyzes what signal existed. Auto marks WIN or LOSS. Know your real win rate.</div><div class="tags"><span class="tag">AUTO WIN/LOSS</span><span class="tag">50-TRADE SYSTEM</span><span class="tag">REAL WIN RATE</span></div></div>
-  </div>
+<div class="wwa-bg" id="what">
+<div class="wwa-inner">
+<div class="sec-tag reveal">WHAT SMALLCHANGE IS</div>
+<h2 class="sec-title reveal">Four Layers. One Guardian.</h2>
+<p class="sec-sub reveal">Not a trading app. A psychological discipline system that works alongside any trading platform you already use.</p>
+<div class="wwa-grid reveal">
+<div class="wwa-card"><div class="wwa-num">LAYER 01</div><div class="wwa-icon">&#129504;</div><div class="wwa-name">Morning Neuro Check</div><div class="wwa-desc">Before markets open, complete your psychological clearance. 14 questions based on neuroscience. Get your mental state score and trade allowance for today. Some days 3 trades. Some days zero.</div><div class="tags"><span class="tag">NEURO SCORE</span><span class="tag">TRADE ALLOWANCE</span><span class="tag">EMOTION FINGERPRINT</span></div></div>
+<div class="wwa-card"><div class="wwa-num">LAYER 02</div><div class="wwa-icon">&#128737;</div><div class="wwa-name">Live Pattern Guardian</div><div class="wwa-desc">Monitors your behaviour in real time. Detects all 7 psychological danger patterns. Intervenes at the exact moment before the mistake with science-backed wisdom from the books.</div><div class="tags"><span class="tag">7 PATTERNS</span><span class="tag">REAL-TIME</span><span class="tag">BOOK-BASED WISDOM</span></div></div>
+<div class="wwa-card"><div class="wwa-num">LAYER 03</div><div class="wwa-icon">&#128221;</div><div class="wwa-name">Automatic Journal</div><div class="wwa-desc">Every trade logged automatically. No manual entry. SmallChange detects your trade, pre-fills all details, asks you only two things. 30 seconds. Every trade. Win or loss. No excuses.</div><div class="tags"><span class="tag">AUTO-FILL</span><span class="tag">30 SECONDS</span><span class="tag">EVERY TRADE</span></div></div>
+<div class="wwa-card"><div class="wwa-num">LAYER 04</div><div class="wwa-icon">&#128200;</div><div class="wwa-name">Weekly Insight Report</div><div class="wwa-desc">Every Sunday, SmallChange shows you who you are as a trader. Which patterns appeared. How your discipline score changed. Your 90-day transformation. Before vs After. In evidence.</div><div class="tags"><span class="tag">PATTERN HISTORY</span><span class="tag">DISCIPLINE SCORE</span><span class="tag">TRANSFORMATION</span></div></div>
 </div>
 </div>
+</div>
+<section class="sec" id="patterns">
+<div class="sec-tag reveal">THE 7 PATTERNS THAT DESTROY TRADERS</div>
+<h2 class="sec-title reveal">SmallChange Detects All Seven.</h2>
+<p class="sec-sub reveal">Every pattern from 50 years of trading psychology research. Mark Douglas. Brett Steenbarger. Alexander Elder. Jesse Livermore.</p>
+<div class="patterns reveal">
+<div class="pattern"><div class="p-num">01</div><div><div class="p-name">Revenge Trading</div><div class="p-desc">After a loss, the brain seeks recovery immediately. The next trade is emotional not logical. Almost always a larger loss.</div><div class="p-quote">A loss is feedback, not a signal to recover. - Mark Douglas</div><div class="p-book">DETECTED BY: Time since last loss and rapid trade placement</div></div><div class="p-badge high">HIGH RISK</div></div>
+<div class="pattern"><div class="p-num">02</div><div><div class="p-name">FOMO Trading</div><div class="p-desc">Fast price movement triggers fear of missing out. Trader jumps in without a setup at the worst entry. Move is already 80% done.</div><div class="p-quote">The market will always have another move. - Trading in the Zone</div><div class="p-book">DETECTED BY: Rapid clicking and no setup in journal</div></div><div class="p-badge high">HIGH RISK</div></div>
+<div class="pattern"><div class="p-num">03</div><div><div class="p-name">Tilt State</div><div class="p-desc">Three consecutive losses trigger survival mode. Rational brain goes offline. All rules abandoned. Accounts destroyed in hours.</div><div class="p-quote">Cut your size in half. Then cut it in half again. - Paul Tudor Jones</div><div class="p-book">DETECTED BY: 3 losses in journal and continued trading</div></div><div class="p-badge high">HIGH RISK</div></div>
+<div class="pattern"><div class="p-num">04</div><div><div class="p-name">Hope Trading</div><div class="p-desc">Losing position held too long. Stop loss moved or ignored. The most expensive thought in trading. The account killer.</div><div class="p-quote">Hope is not a strategy. A stop loss is. - Jesse Livermore</div><div class="p-book">DETECTED BY: Journal shows SL moved or trade held beyond plan</div></div><div class="p-badge high">HIGH RISK</div></div>
+<div class="pattern"><div class="p-num">05</div><div><div class="p-name">Overconfidence</div><div class="p-desc">After a winning streak, risk management is abandoned. The market humbles the overconfident with perfect timing.</div><div class="p-quote">Your best enemy after a winning streak is yourself. - Alexander Elder</div><div class="p-book">DETECTED BY: 3 wins and neuro confidence score above 8</div></div><div class="p-badge med">MEDIUM RISK</div></div>
+<div class="pattern"><div class="p-num">06</div><div><div class="p-name">Overtrading</div><div class="p-desc">Decision quality degrades after every additional trade. By trade 5 it is pure gambling with a trading account.</div><div class="p-quote">Decision fatigue is real. Your best trades are your first two. - Brett Steenbarger</div><div class="p-book">DETECTED BY: Trade count above allowance and 2 hours on platform</div></div><div class="p-badge med">MEDIUM RISK</div></div>
+<div class="pattern"><div class="p-num">07</div><div><div class="p-name">Paralysis</div><div class="p-desc">Perfect setup identified but trigger cannot be pulled. Fear disguised as caution. Setup plays out perfectly from the sidelines.</div><div class="p-quote">Hesitation is fear pretending to be analysis. - Mark Douglas</div><div class="p-book">DETECTED BY: Multiple setups skipped and low confidence score</div></div><div class="p-badge med">MEDIUM RISK</div></div>
+</div>
+</section>
+<section class="sec">
+<div class="sec-tag reveal">BUILT ON 50 YEARS OF RESEARCH</div>
+<h2 class="sec-title reveal">The Books Behind The System.</h2>
+<p class="sec-sub reveal">Every intervention in SmallChange comes directly from the most respected trading psychology literature ever written.</p>
+<div class="books-grid reveal">
+<div class="book-card"><div class="book-icon">&#128218;</div><div class="book-title">Trading in the Zone</div><div class="book-author">MARK DOUGLAS</div><div class="book-insight">The bible of trading psychology. Think in probabilities. Core foundation of the SmallChange pattern engine.</div></div>
+<div class="book-card"><div class="book-icon">&#128218;</div><div class="book-title">The Disciplined Trader</div><div class="book-author">MARK DOUGLAS</div><div class="book-insight">Why traders self-sabotage. How beliefs drive every decision. Framework behind the intervention system.</div></div>
+<div class="book-card"><div class="book-icon">&#128218;</div><div class="book-title">Trading for a Living</div><div class="book-author">DR. ALEXANDER ELDER</div><div class="book-insight">The 3 Ms: Mind, Method, Money. The science of why discipline degrades through the session.</div></div>
+<div class="book-card"><div class="book-icon">&#128218;</div><div class="book-title">Market Wizards</div><div class="book-author">JACK SCHWAGER</div><div class="book-insight">Interviews with the best traders. Common psychological patterns. What separates the 10% from the 90%.</div></div>
+<div class="book-card"><div class="book-icon">&#128218;</div><div class="book-title">The Psychology of Trading</div><div class="book-author">BRETT STEENBARGER</div><div class="book-insight">Neuroscience of trading decisions. Real clinical case studies. Foundation of the emotion fingerprint.</div></div>
+<div class="book-card"><div class="book-icon">&#128218;</div><div class="book-title">Thinking Fast and Slow</div><div class="book-author">DANIEL KAHNEMAN</div><div class="book-insight">Nobel Prize research on decisions. Why every additional decision degrades quality. Science behind trade allowance.</div></div>
+</div>
+</section>
 <section class="sec" id="pricing">
-  <div class="sec-tag reveal">SIMPLE PRICING</div>
-  <h2 class="sec-title reveal">One Plan. Everything Included.</h2>
-  <p class="sec-sub reveal">Try free for 7 days. After that founding member price locked forever.</p>
-  <div class="price-wrap reveal">
-    <div class="price-card">
-      <div class="price-top">
-        <div><div class="price-badge">FOUNDING MEMBER</div><div class="price-name">SmallChange Pro</div><div class="price-desc">Complete access to all 4 tools. Works on Android as an app. Any market worldwide. 7-day free trial.</div></div>
-        <div class="price-right"><div class="price-orig">&#8377;999/month</div><div class="price-main"><span>&#8377;</span>499</div><div class="price-per">PER MONTH</div></div>
-      </div>
-      <div class="price-feats">
-        <div class="pf"><span class="pf-ok">&#10003;</span> NeuroTrader psychological clearance</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> AI chart analyzer 5min+1H+4H</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> Any market worldwide</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> Trade journal with AI debrief</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> 50-trade backtest engine</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> Risk management calculator</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> Android app on home screen</div>
-        <div class="pf"><span class="pf-ok">&#10003;</span> Cancel anytime</div>
-      </div>
-      <div class="price-btn">
-        <a href="index.html" class="btn-gold">START FREE TRIAL &mdash; 7 DAYS FREE</a>
-        <div class="price-note">NO SIGN UP &middot; NO CREDIT CARD &middot; INSTANT ACCESS</div>
-      </div>
-    </div>
-  </div>
+<div class="sec-tag reveal">ONE SIMPLE PRICE</div>
+<h2 class="sec-title reveal">Less Than One Bad Trade.</h2>
+<p class="sec-sub reveal">One bad trade costs more than a year of SmallChange.</p>
+<div class="price-wrap reveal">
+<div class="price-card">
+<div class="price-top"><div><div class="price-badge">FOUNDING MEMBER</div><div class="price-name">SmallChange Pro</div><div class="price-desc">All 4 layers. Morning check, live guardian, automatic journal, weekly insight. Works with every trading app.</div></div><div class="price-right"><div class="price-orig">Rs.499/month</div><div class="price-main"><span>Rs.</span>109</div><div class="price-period">PER MONTH</div></div></div>
+<div class="price-feats">
+<div class="pf"><span class="pf-ok">&#10003;</span> Morning psychological clearance</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> 7 pattern real-time detection</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Book-based interventions</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Automatic trade journal</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Trade allowance system</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Weekly insight report</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Works with Groww, Zerodha, Binance</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Works with any trading app worldwide</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> Android app on home screen</div>
+<div class="pf"><span class="pf-ok">&#10003;</span> 7-day free trial no card needed</div>
+</div>
+<div class="price-btn"><a href="index.html" class="btn-gold">START FREE TRIAL - 7 DAYS FREE</a><div class="price-note">NO SIGN UP - NO CREDIT CARD - INSTANT ACCESS</div></div>
+</div>
+</div>
 </section>
 <section class="sec" id="faq">
-  <div class="sec-tag reveal">QUESTIONS</div>
-  <h2 class="sec-title reveal">Common Questions</h2>
-  <div class="faq reveal">
-    <div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Do I need technical knowledge?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">No. If you can take a screenshot and upload it, you can use SmallChange. You just need TradingView (free) for chart screenshots.</div></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Which markets does it support?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">Any market on Yahoo Finance &mdash; Indian stocks NSE/BSE, US stocks, Bitcoin, Forex pairs, Gold/Silver/Oil and global indices.</div></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Does it place trades automatically?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">No. SmallChange gives you signals and guidance but you place the trade yourself. This builds your discipline long term.</div></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">How does the 7-day free trial work?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">Click Start Free Trial for instant full access for 7 days. No credit card. After 7 days subscribe for &#8377;499/month. Cancel anytime.</div></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Does it work on mobile?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">Yes. Open in Chrome on Android and tap Add to Home Screen. Installs as a full app with its own icon.</div></div></div>
-  </div>
+<div class="sec-tag reveal">QUESTIONS</div>
+<h2 class="sec-title reveal">Common Questions</h2>
+<div class="faq reveal">
+<div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Does SmallChange give trading signals?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">No. SmallChange does not tell you what to trade. It addresses the only real problem in trading: the trader, not the strategy. You bring your strategy. SmallChange makes sure you execute it without emotion.</div></div></div>
+<div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Which trading apps does it work with?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">Every trading app: Groww, Zerodha, Binance, WazirX, Upstox, AngelOne and any other platform. Works alongside your existing app.</div></div></div>
+<div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">Does SmallChange guarantee profits?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">No. No system can guarantee profits. SmallChange reduces emotional trading and improves discipline. Results depend on your strategy and consistent use.</div></div></div>
+<div class="faq-item"><div class="faq-q" onclick="faq(this)"><span class="faq-q-t">How does the free trial work?</span><span class="faq-plus">+</span></div><div class="faq-a"><div class="faq-a-in">Click Start Free Trial for instant full access. No credit card. After 7 days subscribe for Rs.109/month as founding member. Cancel anytime.</div></div></div>
+</div>
 </section>
 <section class="cta-section" id="start">
-  <div class="cta-inner reveal">
-    <div class="sec-tag" style="text-align:center;">START TODAY</div>
-    <h2 class="sec-title" style="text-align:center;">7 Days Free. No Card Needed.</h2>
-    <p style="font-size:17px;color:var(--text);line-height:1.8;max-width:460px;margin:0 auto 32px;">Use SmallChange completely free for 7 days. No sign up. No credit card. Instant access.</p>
-    <a href="index.html" class="btn-gold" style="font-size:18px;padding:20px 50px;letter-spacing:2px;">&#9889; START FREE TRIAL &rarr;</a>
-    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;margin-top:14px;margin-bottom:32px;">NO SIGN UP &middot; NO CREDIT CARD &middot; INSTANT ACCESS</div>
-    <div class="trial-box">
-      <div style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:16px;">HOW THE TRIAL WORKS</div>
-      <div class="trial-row"><span style="color:var(--green);font-weight:600;white-space:nowrap;min-width:60px;">Day 1-7</span><span>Full access to all 4 tools. Completely free. No restrictions.</span></div>
-      <div class="trial-row"><span style="color:var(--gold);font-weight:600;white-space:nowrap;min-width:60px;">Day 7</span><span>Subscribe for &#8377;499/month as a founding member. Price locked forever.</span></div>
-      <div class="trial-row"><span style="color:var(--dim);font-weight:600;white-space:nowrap;min-width:60px;">After</span><span>Continue trading. Cancel anytime. No questions asked.</span></div>
-    </div>
-    <div class="contact-row">
-      <div class="contact-lbl">QUESTIONS? CONTACT DIRECTLY</div>
-      <div class="contact-btns">
-        <a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20want%20to%20know%20more%20about%20SmallChange" class="wa-btn" target="_blank">&#128172; WhatsApp</a>
-        <a href="mailto:murthybondu7@gmail.com" class="email-btn">&#9993; murthybondu7@gmail.com</a>
-      </div>
-    </div>
-  </div>
+<div class="cta-inner reveal">
+<div class="sec-tag" style="text-align:center;">START TODAY</div>
+<h2 class="sec-title" style="text-align:center;">7 Days Free. No Card.</h2>
+<p style="font-size:17px;color:var(--text);line-height:1.8;margin:0 auto 32px;">The only thing standing between you and disciplined trading is one decision.</p>
+<a href="index.html" class="btn-gold" style="font-size:18px;padding:20px 50px;letter-spacing:2px;">START FREE TRIAL</a>
+<div style="font-family:Share Tech Mono,monospace;font-size:10px;color:var(--dim);letter-spacing:1px;margin-top:14px;margin-bottom:32px;">NO SIGN UP - NO CREDIT CARD - Rs.109/MONTH AFTER TRIAL</div>
+<div class="trial-box">
+<div style="font-family:Share Tech Mono,monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:16px;">HOW IT WORKS</div>
+<div class="trial-row"><span style="color:var(--green);font-weight:600;min-width:60px;">Day 1-7</span><span>Full access to all 4 layers. Free. No restrictions.</span></div>
+<div class="trial-row"><span style="color:var(--gold);font-weight:600;min-width:60px;">Day 7</span><span>Subscribe Rs.109/month as founding member. Locked forever.</span></div>
+<div class="trial-row" style="margin-bottom:0"><span style="color:var(--dim);font-weight:600;min-width:60px;">After</span><span>Continue. Cancel anytime. No questions asked.</span></div>
+</div>
+<div style="padding-top:24px;border-top:1px solid var(--border);margin-top:8px;">
+<div style="font-family:Share Tech Mono,monospace;font-size:9px;color:var(--dim);letter-spacing:3px;margin-bottom:14px;">QUESTIONS? CONTACT DIRECTLY</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+<a href="https://wa.me/91XXXXXXXXXX?text=Hi SmallChange" class="wa-btn" target="_blank">WhatsApp</a>
+<a href="mailto:murthybondu7@gmail.com" class="email-btn">murthybondu7@gmail.com</a>
+</div>
+</div>
+</div>
 </section>
 <footer>
-  <div class="foot-logo">&#9889; <span>Small</span>Change</div>
-  <div class="foot-links"><a href="#problem">Problem</a><a href="#solution">Solution</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#start">Start Free</a></div>
-  <div class="foot-copy">&copy; 2026 SMALLCHANGE TRADING SYSTEM</div>
+<div class="foot-logo">&#9889; <span>Small</span>Change</div>
+<div class="foot-links"><a href="#truth">Problem</a><a href="#what">Solution</a><a href="#patterns">7 Patterns</a><a href="#pricing">Pricing</a><a href="#start">Start Free</a></div>
+<div class="foot-copy">2026 SMALLCHANGE TRADING DISCIPLINE SYSTEM</div>
 </footer>
 <script>
-function faq(el){var item=el.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});if(!open)item.classList.add('open');}
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
-document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});});
+function faq(el){var item=el.closest(".faq-item");var open=item.classList.contains("open");document.querySelectorAll(".faq-item").forEach(function(i){i.classList.remove("open");});if(!open)item.classList.add("open");}
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}});},{threshold:0.08});
+document.querySelectorAll(".reveal").forEach(function(el){obs.observe(el);});
+document.querySelectorAll("a[href^='#']").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();var t=document.querySelector(a.getAttribute("href"));if(t)t.scrollIntoView({behavior:"smooth"});});});
 </script>
 </body>
 </html>
