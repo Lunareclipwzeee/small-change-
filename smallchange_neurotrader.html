@@ -8,15 +8,15 @@
 <style>
 :root{--bg:#020408;--p1:#060c12;--p2:#0a1420;--border:#0f2030;--green:#00ff88;--yellow:#ffcc00;--red:#ff2244;--blue:#00aaff;--purple:#aa44ff;--text:#7090a8;--bright:#c8e8ff;--dim:#1a3048;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-height:100vh;overflow-x:hidden;}
 #neural-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;}
 .page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:36px 18px 80px;}
-.back-btn{position:fixed;top:10px;left:10px;z-index:999;display:flex;align-items:center;gap:6px;background:rgba(2,4,8,.85);border:1px solid #0f2030;border-radius:3px;padding:6px 12px;text-decoration:none;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;color:#00aaff;backdrop-filter:blur(8px);}
+.back-btn{position:fixed;top:10px;left:10px;z-index:999;display:flex;align-items:center;gap:6px;background:rgba(2,4,8,.85);border:1px solid #0f2030;border-radius:3px;padding:6px 12px;text-decoration:none;font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:1px;color:#00aaff;backdrop-filter:blur(8px);}
 .hdr{text-align:center;margin-bottom:44px;}
-.hdr-eyebrow{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:6px;color:var(--blue);opacity:.7;margin-bottom:10px;}
-.hdr-title{font-family:'Orbitron',monospace;font-size:clamp(26px,5vw,48px);font-weight:900;letter-spacing:2px;color:var(--bright);line-height:1;text-shadow:0 0 40px rgba(0,170,255,.3);}
+.hdr-eyebrow{font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:6px;color:var(--blue);opacity:.7;margin-bottom:10px;}
+.hdr-title{font-family:"Orbitron",monospace;font-size:clamp(26px,5vw,48px);font-weight:900;letter-spacing:2px;color:var(--bright);line-height:1;}
 .hdr-title span{color:var(--green);}
-.hdr-sub{margin-top:12px;font-size:13px;color:var(--dim);letter-spacing:1px;font-family:'Share Tech Mono',monospace;}
+.hdr-sub{margin-top:12px;font-size:13px;color:var(--dim);letter-spacing:1px;font-family:"Share Tech Mono",monospace;}
 .scanner-wrap{display:flex;justify-content:center;margin-bottom:40px;}
 .brain-scanner{position:relative;width:200px;height:200px;}
 .brain-ring{position:absolute;border-radius:50%;border:1px solid;animation:pulse-ring 2s ease-in-out infinite;}
@@ -24,40 +24,46 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .brain-ring:nth-child(2){inset:15px;border-color:rgba(0,255,136,.2);animation-delay:.3s;}
 .brain-ring:nth-child(3){inset:30px;border-color:rgba(170,68,255,.2);animation-delay:.6s;}
 .brain-core{position:absolute;inset:50px;border-radius:50%;background:radial-gradient(circle,rgba(0,170,255,.15) 0%,transparent 70%);border:1px solid rgba(0,170,255,.4);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;}
-.brain-score-num{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;color:var(--bright);line-height:1;transition:color .5s ease;}
-.brain-score-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--dim);}
+.brain-score-num{font-family:"Orbitron",monospace;font-size:28px;font-weight:900;color:var(--bright);line-height:1;transition:color .5s ease;}
+.brain-score-lbl{font-family:"Share Tech Mono",monospace;font-size:8px;letter-spacing:2px;color:var(--dim);}
 .brain-scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:scan-line 3s ease-in-out infinite;opacity:.6;}
+.pattern-warning{background:rgba(255,34,68,.06);border:1px solid rgba(255,34,68,.25);border-radius:3px;padding:16px 20px;margin-bottom:24px;display:none;}
+.pw-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--red);margin-bottom:10px;}
+.pw-items{display:flex;flex-direction:column;gap:8px;}
+.pw-item{font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.pw-icon{flex-shrink:0;font-size:16px;}
 .state-bar{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:36px;}
 .state-dot{width:10px;height:10px;border-radius:50%;transition:all .5s ease;}
 .state-dot.active{box-shadow:0 0 12px currentColor;}
-.state-label{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:color .5s ease;}
-.state-sublabel{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;}
+.state-label{font-family:"Orbitron",monospace;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:color .5s ease;}
+.state-sublabel{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);letter-spacing:1px;}
 .phase{display:none;}
 .phase.active{display:block;animation:fadeIn .5s ease;}
-.phase-hdr{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:5px;color:var(--blue);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-.phase-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
+.phase-hdr{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:5px;color:var(--blue);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.phase-hdr::after{content:"";flex:1;height:1px;background:var(--border);}
 .q-card{background:var(--p1);border:1px solid var(--border);border-radius:4px;padding:20px 22px;margin-bottom:14px;transition:border-color .3s;position:relative;overflow:hidden;}
-.q-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border);transition:background .3s;}
+.q-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border);transition:background .3s;}
 .q-card.answered::before{background:var(--green);}
 .q-card.danger::before{background:var(--red);}
 .q-card.warning::before{background:var(--yellow);}
-.q-num{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:8px;}
+.q-num{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:8px;}
 .q-text{font-size:15px;color:var(--bright);font-weight:500;margin-bottom:16px;line-height:1.5;}
-.q-sub{font-size:12px;color:var(--dim);font-family:'Share Tech Mono',monospace;margin-bottom:14px;letter-spacing:.5px;}
+.q-sub{font-size:12px;color:var(--dim);font-family:"Share Tech Mono",monospace;margin-bottom:14px;letter-spacing:.5px;}
+.q-pattern-note{background:rgba(255,204,0,.05);border:1px solid rgba(255,204,0,.2);border-radius:2px;padding:8px 12px;margin-bottom:12px;font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--yellow);line-height:1.5;}
 .q-slider-wrap{padding:4px 0 8px;}
 .q-slider{width:100%;height:4px;background:var(--border);border-radius:2px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;}
 .q-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue);cursor:pointer;box-shadow:0 0 10px rgba(0,170,255,.5);}
-.slider-labels{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:1px;}
+.slider-labels{display:flex;justify-content:space-between;font-family:"Share Tech Mono",monospace;font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:1px;}
 .q-options{display:flex;flex-wrap:wrap;gap:8px;}
-.q-opt{background:var(--p2);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:2px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;transition:all .2s;}
+.q-opt{background:var(--p2);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:2px;cursor:pointer;font-family:"Inter",sans-serif;font-size:13px;transition:all .2s;}
 .q-opt:hover{border-color:var(--blue);color:var(--blue);}
 .q-opt.selected{border-color:var(--green);color:var(--green);background:rgba(0,255,136,.06);}
 .q-opt.danger-opt.selected{border-color:var(--red);color:var(--red);background:rgba(255,34,68,.06);}
 .q-opt.warn-opt.selected{border-color:var(--yellow);color:var(--yellow);background:rgba(255,204,0,.06);}
-.q-input{width:100%;background:var(--p2);border:1px solid var(--border);color:var(--bright);padding:12px 14px;border-radius:3px;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .2s;resize:none;min-height:70px;}
+.q-input{width:100%;background:var(--p2);border:1px solid var(--border);color:var(--bright);padding:12px 14px;border-radius:3px;font-family:"Inter",sans-serif;font-size:14px;outline:none;transition:border-color .2s;resize:none;min-height:70px;}
 .q-input:focus{border-color:var(--blue);}
 .phase-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
-.nav-btn{padding:11px 24px;border-radius:3px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .3s;border:1px solid;}
+.nav-btn{padding:11px 24px;border-radius:3px;cursor:pointer;font-family:"Orbitron",monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .3s;border:1px solid;}
 .nav-btn.primary{background:var(--blue);border-color:var(--blue);color:#000;box-shadow:0 0 20px rgba(0,170,255,.25);}
 .nav-btn.primary:hover{background:#33bbff;}
 .nav-btn.secondary{background:transparent;border-color:var(--border);color:var(--dim);}
@@ -68,8 +74,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .pp-dot.active{background:var(--blue);box-shadow:0 0 8px var(--blue);}
 .processing{display:none;text-align:center;padding:60px 20px;}
 .proc-brain{width:80px;height:80px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--blue);margin:0 auto 24px;animation:spin 1s linear infinite;}
-.proc-title{font-family:'Orbitron',monospace;font-size:14px;letter-spacing:3px;color:var(--blue);margin-bottom:10px;}
-.proc-steps span{display:block;margin:5px 0;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);transition:color .3s;}
+.proc-title{font-family:"Orbitron",monospace;font-size:14px;letter-spacing:3px;color:var(--blue);margin-bottom:10px;}
+.proc-steps span{display:block;margin:5px 0;font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);transition:color .3s;}
 .proc-steps span.active{color:var(--blue);}
 .proc-steps span.done{color:var(--green);}
 .verdict{display:none;}
@@ -78,41 +84,46 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .verdict-hero.caution{border-color:var(--yellow);}
 .verdict-hero.blocked{border-color:var(--red);}
 .verdict-icon{font-size:64px;margin-bottom:14px;}
-.verdict-status{font-family:'Orbitron',monospace;font-size:clamp(22px,4vw,36px);font-weight:900;letter-spacing:3px;margin-bottom:8px;}
+.verdict-status{font-family:"Orbitron",monospace;font-size:clamp(22px,4vw,36px);font-weight:900;letter-spacing:3px;margin-bottom:8px;}
 .verdict-hero.cleared .verdict-status{color:var(--green);}
 .verdict-hero.caution .verdict-status{color:var(--yellow);}
 .verdict-hero.blocked .verdict-status{color:var(--red);}
 .verdict-score-ring{display:inline-flex;align-items:center;justify-content:center;flex-direction:column;width:90px;height:90px;border-radius:50%;border:2px solid currentColor;margin:16px 0;}
-.verdict-score-num{font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:var(--bright);}
-.verdict-score-lbl{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--dim);}
+.verdict-score-num{font-family:"Orbitron",monospace;font-size:26px;font-weight:900;color:var(--bright);}
+.verdict-score-lbl{font-family:"Share Tech Mono",monospace;font-size:7px;letter-spacing:2px;color:var(--dim);}
 .verdict-msg{font-size:15px;color:var(--text);line-height:1.7;max-width:600px;margin:0 auto;}
-.trade-allowance-box{display:none;margin-bottom:20px;}
-.ta-inner{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:20px 22px;}
-.ta-hdr{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:#e8b84b;margin-bottom:14px;}
+.ta-box{display:none;margin-bottom:20px;background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:20px 22px;}
+.ta-hdr{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:4px;color:#e8b84b;margin-bottom:14px;}
 .ta-layout{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
-.ta-num{font-family:'Orbitron',monospace;font-size:48px;font-weight:900;line-height:1;}
+.ta-num{font-family:"Orbitron",monospace;font-size:48px;font-weight:900;line-height:1;}
 .ta-reason{font-size:14px;line-height:1.7;color:var(--text);margin-bottom:10px;}
 .ta-slots{display:flex;gap:8px;flex-wrap:wrap;}
-.ta-slot{width:36px;height:36px;border-radius:3px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;transition:all .3s;}
-.ta-rule{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);line-height:1.6;}
+.ta-slot{width:36px;height:36px;border-radius:3px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:"Orbitron",monospace;font-size:12px;font-weight:700;transition:all .3s;}
+.ta-rule{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-family:"Share Tech Mono",monospace;font-size:11px;color:var(--dim);line-height:1.6;}
+.pattern-insights{background:var(--p1);border:1px solid rgba(170,68,255,.3);border-radius:3px;padding:18px 20px;margin-bottom:16px;display:none;}
+.pi-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--purple);margin-bottom:12px;}
+.pi-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);}
+.pi-item:last-child{border-bottom:none;}
+.pi-icon{font-size:18px;flex-shrink:0;}
+.pi-text strong{color:var(--bright);}
 .neuro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
 .nm{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:14px;text-align:center;}
 .nm-bar-bg{height:4px;background:var(--border);border-radius:2px;margin:8px 0 6px;overflow:hidden;}
 .nm-bar{height:100%;border-radius:2px;transition:width 1s ease;width:0%;}
-.nm-val{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:var(--bright);}
-.nm-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--dim);margin-top:4px;}
+.nm-val{font-family:"Orbitron",monospace;font-size:18px;font-weight:700;color:var(--bright);}
+.nm-lbl{font-family:"Share Tech Mono",monospace;font-size:8px;letter-spacing:2px;color:var(--dim);margin-top:4px;}
 .ai-msg{background:var(--p1);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:3px;padding:18px 20px;margin-bottom:16px;}
-.ai-msg-hdr{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--blue);margin-bottom:10px;}
+.ai-msg-hdr{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--blue);margin-bottom:10px;}
 .ai-msg-body{font-size:14px;line-height:1.8;color:var(--text);}
 .fingerprint{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:18px 20px;margin-bottom:16px;}
-.fp-title{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--purple);margin-bottom:14px;}
+.fp-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--purple);margin-bottom:14px;}
 .fp-item{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .fp-name{font-size:13px;color:var(--text);width:130px;flex-shrink:0;font-weight:500;}
 .fp-bar-bg{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
 .fp-bar{height:100%;border-radius:3px;transition:width 1.2s ease;width:0%;}
-.fp-pct{font-family:'Share Tech Mono',monospace;font-size:11px;width:36px;text-align:right;}
+.fp-pct{font-family:"Share Tech Mono",monospace;font-size:11px;width:36px;text-align:right;}
 .rx{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:18px 20px;margin-bottom:16px;}
-.rx-title{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--yellow);margin-bottom:12px;}
+.rx-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--yellow);margin-bottom:12px;}
 .rx-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
 .rx-item:last-child{border-bottom:none;}
 .rx-icon{font-size:20px;flex-shrink:0;}
@@ -121,7 +132,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .rules-box.green{background:rgba(0,255,136,.04);border-color:rgba(0,255,136,.2);}
 .rules-box.yellow{background:rgba(255,204,0,.04);border-color:rgba(255,204,0,.2);}
 .rules-box.red{background:rgba(255,34,68,.04);border-color:rgba(255,34,68,.2);}
-.rules-title{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;margin-bottom:10px;}
+.rules-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;margin-bottom:10px;}
 .rules-box.green .rules-title{color:var(--green);}
 .rules-box.yellow .rules-title{color:var(--yellow);}
 .rules-box.red .rules-title{color:var(--red);}
@@ -129,20 +140,23 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .rules-list li{padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:10px;}
 .rules-list li:last-child{border-bottom:none;}
 .retest-box{text-align:center;padding:20px;background:var(--p1);border:1px solid var(--border);border-radius:3px;margin-bottom:16px;}
-.retest-timer{font-family:'Orbitron',monospace;font-size:36px;font-weight:900;color:var(--red);margin:10px 0;letter-spacing:4px;}
-.verdict-nav{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
-.v-btn{padding:12px 24px;border-radius:3px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .3s;border:1px solid;}
-.v-btn.go{background:var(--green);border-color:var(--green);color:#000;box-shadow:0 0 24px rgba(0,255,136,.3);}
-.v-btn.retry{background:transparent;border-color:var(--blue);color:var(--blue);}
-.v-btn.reset{background:transparent;border-color:var(--border);color:var(--dim);}
-.history-row{display:grid;grid-template-columns:100px 1fr auto auto;gap:10px;padding:10px 14px;border:1px solid var(--border);border-top:none;font-size:12px;align-items:center;}
+.retest-timer{font-family:"Orbitron",monospace;font-size:36px;font-weight:900;color:var(--red);margin:10px 0;letter-spacing:4px;}
+.history-section{margin-top:28px;}
+.history-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:4px;color:var(--dim);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.history-title::after{content:"";flex:1;height:1px;background:var(--border);}
+.history-row{display:grid;grid-template-columns:100px 1fr 60px 60px;gap:10px;padding:10px 14px;border:1px solid var(--border);border-top:none;font-size:12px;align-items:center;}
 .history-row:first-child{border-top:1px solid var(--border);border-radius:3px 3px 0 0;}
 .history-row:last-child{border-radius:0 0 3px 3px;}
-.h-time{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);}
+.h-time{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);}
 .h-state.c{color:var(--green);}
 .h-state.w{color:var(--yellow);}
 .h-state.b{color:var(--red);}
-.h-score{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;}
+.h-score{font-family:"Orbitron",monospace;font-size:13px;font-weight:700;}
+.verdict-nav{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+.v-btn{padding:12px 24px;border-radius:3px;cursor:pointer;font-family:"Orbitron",monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .3s;border:1px solid;}
+.v-btn.go{background:var(--green);border-color:var(--green);color:#000;}
+.v-btn.retry{background:transparent;border-color:var(--blue);color:var(--blue);}
+.v-btn.reset{background:transparent;border-color:var(--border);color:var(--dim);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.04);opacity:1}}
 @keyframes scan-line{0%{top:0;opacity:0}10%{opacity:.6}90%{opacity:.6}100%{top:100%;opacity:0}}
@@ -152,12 +166,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </head>
 <body>
 <canvas id="neural-bg"></canvas>
-<a href="index.html" class="back-btn">&#8592; HOME</a>
+<a href="index.html" class="back-btn">HOME</a>
 <div class="page">
 <header class="hdr">
-  <div class="hdr-eyebrow">SMALLCHANGE NEUROTRADER v1.0</div>
+  <div class="hdr-eyebrow">SMALLCHANGE NEUROTRADER v2.0</div>
   <h1 class="hdr-title">Emotional <span>Clearance</span></h1>
-  <p class="hdr-sub">The world's first AI psychological clearance system for traders</p>
+  <p class="hdr-sub">The world's first AI psychological clearance system with pattern memory</p>
 </header>
 <div class="scanner-wrap">
   <div class="brain-scanner">
@@ -166,43 +180,48 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <div class="brain-ring"></div>
     <div class="brain-scan-line"></div>
     <div class="brain-core">
-      <div class="brain-score-num" id="live-score">&#8212;</div>
+      <div class="brain-score-num" id="live-score">--</div>
       <div class="brain-score-lbl">NEURO SCORE</div>
     </div>
   </div>
 </div>
+<div class="pattern-warning" id="pattern-warning">
+  <div class="pw-title">YOUR PATTERN HISTORY WARNING</div>
+  <div class="pw-items" id="pw-items"></div>
+</div>
 <div class="state-bar">
-  <div class="state-dot" id="state-dot" style="color:var(--blue);background:var(--blue);"></div>
+  <div class="state-dot active" id="state-dot" style="color:var(--blue);background:var(--blue);"></div>
   <div>
     <div class="state-label" id="state-label" style="color:var(--blue);">SCANNING</div>
     <div class="state-sublabel" id="state-sublabel">Complete all phases to get clearance</div>
   </div>
 </div>
 <div class="phase-progress" id="phase-dots">
-  <div class="pp-dot active" data-phase="0"></div>
-  <div class="pp-dot" data-phase="1"></div>
-  <div class="pp-dot" data-phase="2"></div>
-  <div class="pp-dot" data-phase="3"></div>
+  <div class="pp-dot active"></div>
+  <div class="pp-dot"></div>
+  <div class="pp-dot"></div>
+  <div class="pp-dot"></div>
 </div>
 <div class="phase active" id="phase-0">
-  <div class="phase-hdr">Phase 01 &#8212; Biometric Baseline</div>
+  <div class="phase-hdr">Phase 01 -- Biometric Baseline</div>
   <div class="q-card" id="qc-sleep">
     <div class="q-num">NEURO-01 / SLEEP QUALITY</div>
     <div class="q-text">How many hours did you sleep last night?</div>
-    <div class="q-sub">Sleep deprivation increases cortisol 37% &#8212; directly impairs risk assessment</div>
+    <div class="q-sub">Sleep deprivation increases cortisol 37% and directly impairs risk assessment</div>
+    <div class="q-pattern-note" id="sleep-pattern-note" style="display:none;"></div>
     <div class="q-slider-wrap"><input type="range" class="q-slider" id="q-sleep" min="0" max="10" step="1" value="5" oninput="updateSlider('sleep',this.value)"/><div class="slider-labels"><span>0h</span><span>3h</span><span>5h</span><span>7h</span><span>9h+</span></div></div>
-    <div id="sleep-feedback" style="font-family:'Share Tech Mono',monospace;font-size:11px;margin-top:8px;"></div>
+    <div id="sleep-feedback" style="font-family:Share Tech Mono,monospace;font-size:11px;margin-top:8px;"></div>
   </div>
   <div class="q-card" id="qc-physical">
     <div class="q-num">NEURO-02 / PHYSICAL STATE</div>
     <div class="q-text">How is your body feeling right now?</div>
-    <div class="q-sub">Physical discomfort activates threat-response &#8212; reduces rational thinking</div>
+    <div class="q-sub">Physical discomfort activates threat-response and reduces rational thinking</div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'physical','great',10)">&#128170; Energized</button>
-      <button class="q-opt" onclick="selectOpt(this,'physical','good',7)">&#128522; Good</button>
-      <button class="q-opt" onclick="selectOpt(this,'physical','tired',3)" data-cls="warn-opt">&#128564; Tired</button>
-      <button class="q-opt" onclick="selectOpt(this,'physical','sick',0)" data-cls="danger-opt">&#129298; Unwell</button>
-      <button class="q-opt" onclick="selectOpt(this,'physical','hungry',2)" data-cls="warn-opt">&#128532; Hungry/Stressed</button>
+      <button class="q-opt" onclick="selectOpt(this,'physical','great',10)">Energized</button>
+      <button class="q-opt" onclick="selectOpt(this,'physical','good',7)">Good</button>
+      <button class="q-opt" onclick="selectOpt(this,'physical','tired',3)" data-cls="warn-opt">Tired</button>
+      <button class="q-opt" onclick="selectOpt(this,'physical','sick',0)" data-cls="danger-opt">Unwell</button>
+      <button class="q-opt" onclick="selectOpt(this,'physical','hungry',2)" data-cls="warn-opt">Hungry/Stressed</button>
     </div>
   </div>
   <div class="q-card" id="qc-substances">
@@ -210,78 +229,80 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <div class="q-text">Have you consumed anything that affects your nervous system today?</div>
     <div class="q-sub">Caffeine excess raises cortisol. Alcohol impairs prefrontal cortex function</div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'substances','none',10)">&#10003; Nothing</button>
-      <button class="q-opt" onclick="selectOpt(this,'substances','coffee',7)">&#9749; Normal Coffee</button>
-      <button class="q-opt" onclick="selectOpt(this,'substances','too_much_coffee',4)" data-cls="warn-opt">&#9889; Excessive Caffeine</button>
-      <button class="q-opt" onclick="selectOpt(this,'substances','alcohol',0)" data-cls="danger-opt">&#127866; Alcohol</button>
+      <button class="q-opt" onclick="selectOpt(this,'substances','none',10)">Nothing</button>
+      <button class="q-opt" onclick="selectOpt(this,'substances','coffee',7)">Normal Coffee</button>
+      <button class="q-opt" onclick="selectOpt(this,'substances','too_much',4)" data-cls="warn-opt">Excessive Caffeine</button>
+      <button class="q-opt" onclick="selectOpt(this,'substances','alcohol',0)" data-cls="danger-opt">Alcohol</button>
     </div>
   </div>
-  <div class="phase-nav"><button class="nav-btn primary" onclick="nextPhase(1)">NEXT: EMOTIONAL STATE &#8594;</button></div>
+  <div class="phase-nav"><button class="nav-btn primary" onclick="nextPhase(1)">NEXT: EMOTIONAL STATE</button></div>
 </div>
 <div class="phase" id="phase-1">
-  <div class="phase-hdr">Phase 02 &#8212; Emotional State Scan</div>
+  <div class="phase-hdr">Phase 02 -- Emotional State Scan</div>
   <div class="q-card">
     <div class="q-num">NEURO-04 / CURRENT MOOD</div>
-    <div class="q-text">On a scale 1&#8211;10, what is your current emotional state?</div>
+    <div class="q-text">On a scale 1-10, what is your current emotional state?</div>
     <div class="q-sub">1 = Extremely anxious/angry. 10 = Calm, focused, detached</div>
     <div class="q-slider-wrap"><input type="range" class="q-slider" id="q-mood" min="1" max="10" step="1" value="5" oninput="updateSlider('mood',this.value)"/><div class="slider-labels"><span>Anxious</span><span>Uneasy</span><span>Neutral</span><span>Calm</span><span>Zen</span></div></div>
-    <div id="mood-feedback" style="font-family:'Share Tech Mono',monospace;font-size:11px;margin-top:8px;"></div>
+    <div id="mood-feedback" style="font-family:Share Tech Mono,monospace;font-size:11px;margin-top:8px;"></div>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-05 / RECENT LOSS</div>
     <div class="q-text">Have you lost a trade in the last 4 hours?</div>
-    <div class="q-sub">Loss activates the same brain region as physical pain &#8212; revenge trading is neurological</div>
+    <div class="q-sub">Loss activates the same brain region as physical pain. Revenge trading is neurological not rational.</div>
+    <div class="q-pattern-note" id="loss-pattern-note" style="display:none;"></div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'recent_loss','no',10)">&#10003; No losses today</button>
-      <button class="q-opt" onclick="selectOpt(this,'recent_loss','small',6)" data-cls="warn-opt">&#9888; Small loss</button>
-      <button class="q-opt" onclick="selectOpt(this,'recent_loss','big',2)" data-cls="danger-opt">&#128680; Significant loss</button>
-      <button class="q-opt" onclick="selectOpt(this,'recent_loss','multiple',0)" data-cls="danger-opt">&#128128; Multiple losses</button>
+      <button class="q-opt" onclick="selectOpt(this,'recent_loss','no',10)">No losses today</button>
+      <button class="q-opt" onclick="selectOpt(this,'recent_loss','small',6)" data-cls="warn-opt">Small loss within target</button>
+      <button class="q-opt" onclick="selectOpt(this,'recent_loss','big',2)" data-cls="danger-opt">Significant loss</button>
+      <button class="q-opt" onclick="selectOpt(this,'recent_loss','multiple',0)" data-cls="danger-opt">Multiple losses in a row</button>
     </div>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-06 / TRADING MOTIVATION</div>
     <div class="q-text">Why are you trading RIGHT NOW?</div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'motivation','setup',10)">&#127919; Clear setup identified</button>
-      <button class="q-opt" onclick="selectOpt(this,'motivation','bored',2)" data-cls="warn-opt">&#128528; Bored</button>
-      <button class="q-opt" onclick="selectOpt(this,'motivation','recover',0)" data-cls="danger-opt">&#128548; Recovering losses</button>
-      <button class="q-opt" onclick="selectOpt(this,'motivation','fomo',1)" data-cls="danger-opt">&#128247; FOMO</button>
-      <button class="q-opt" onclick="selectOpt(this,'motivation','routine',8)">&#128203; Trading routine</button>
+      <button class="q-opt" onclick="selectOpt(this,'motivation','setup',10)">Clear setup identified</button>
+      <button class="q-opt" onclick="selectOpt(this,'motivation','bored',2)" data-cls="warn-opt">Bored</button>
+      <button class="q-opt" onclick="selectOpt(this,'motivation','recover',0)" data-cls="danger-opt">Recovering losses</button>
+      <button class="q-opt" onclick="selectOpt(this,'motivation','fomo',1)" data-cls="danger-opt">FOMO</button>
+      <button class="q-opt" onclick="selectOpt(this,'motivation','routine',8)">Trading routine</button>
     </div>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-07 / FINANCIAL PRESSURE</div>
     <div class="q-text">Are you trading money you emotionally need?</div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'pressure','none',10)">&#10003; Pure trading capital</button>
-      <button class="q-opt" onclick="selectOpt(this,'pressure','some',5)" data-cls="warn-opt">&#9888; Some pressure</button>
-      <button class="q-opt" onclick="selectOpt(this,'pressure','high',0)" data-cls="danger-opt">&#128680; I need this money</button>
+      <button class="q-opt" onclick="selectOpt(this,'pressure','none',10)">Pure trading capital</button>
+      <button class="q-opt" onclick="selectOpt(this,'pressure','some',5)" data-cls="warn-opt">Some pressure</button>
+      <button class="q-opt" onclick="selectOpt(this,'pressure','high',0)" data-cls="danger-opt">I need this money</button>
     </div>
   </div>
   <div class="phase-nav">
-    <button class="nav-btn secondary" onclick="nextPhase(0)">&#8592; BACK</button>
-    <button class="nav-btn primary" onclick="nextPhase(2)">NEXT: BEHAVIORAL SCAN &#8594;</button>
+    <button class="nav-btn secondary" onclick="nextPhase(0)">BACK</button>
+    <button class="nav-btn primary" onclick="nextPhase(2)">NEXT: BEHAVIORAL SCAN</button>
   </div>
 </div>
 <div class="phase" id="phase-2">
-  <div class="phase-hdr">Phase 03 &#8212; Behavioral Pattern Detection</div>
+  <div class="phase-hdr">Phase 03 -- Behavioral Pattern Detection</div>
   <div class="q-card">
     <div class="q-num">NEURO-08 / TRADE FREQUENCY</div>
     <div class="q-text">How many trades have you taken today?</div>
+    <div class="q-pattern-note" id="freq-pattern-note" style="display:none;"></div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'trades_today','zero',10)">0 &#8212; Fresh start</button>
-      <button class="q-opt" onclick="selectOpt(this,'trades_today','one_two',8)">1&#8211;2 &#8212; Controlled</button>
-      <button class="q-opt" onclick="selectOpt(this,'trades_today','three_four',5)" data-cls="warn-opt">3&#8211;4 &#8212; Moderate</button>
-      <button class="q-opt" onclick="selectOpt(this,'trades_today','five_plus',1)" data-cls="danger-opt">5+ &#8212; Overtrading</button>
+      <button class="q-opt" onclick="selectOpt(this,'trades_today','zero',10)">0 Fresh start</button>
+      <button class="q-opt" onclick="selectOpt(this,'trades_today','one_two',8)">1-2 Controlled</button>
+      <button class="q-opt" onclick="selectOpt(this,'trades_today','three_four',5)" data-cls="warn-opt">3-4 Moderate</button>
+      <button class="q-opt" onclick="selectOpt(this,'trades_today','five_plus',1)" data-cls="danger-opt">5+ Overtrading</button>
     </div>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-09 / CHART OBSESSION</div>
-    <div class="q-text">How long have you been staring at charts today?</div>
+    <div class="q-text">How long have you been watching charts today?</div>
     <div class="q-options">
       <button class="q-opt" onclick="selectOpt(this,'screen_time','fresh',10)">Just opened</button>
-      <button class="q-opt" onclick="selectOpt(this,'screen_time','one_two',8)">1&#8211;2 hours</button>
-      <button class="q-opt" onclick="selectOpt(this,'screen_time','three_four',5)" data-cls="warn-opt">3&#8211;4 hours</button>
+      <button class="q-opt" onclick="selectOpt(this,'screen_time','one_two',8)">1-2 hours</button>
+      <button class="q-opt" onclick="selectOpt(this,'screen_time','three_four',5)" data-cls="warn-opt">3-4 hours</button>
       <button class="q-opt" onclick="selectOpt(this,'screen_time','all_day',2)" data-cls="danger-opt">6+ hours all day</button>
     </div>
   </div>
@@ -289,66 +310,68 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <div class="q-num">NEURO-10 / TRADING PLAN</div>
     <div class="q-text">Do you have a written trading plan for today?</div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'plan','written',10)">&#128221; Written with rules</button>
-      <button class="q-opt" onclick="selectOpt(this,'plan','mental',6)" data-cls="warn-opt">&#129504; Mental plan only</button>
-      <button class="q-opt" onclick="selectOpt(this,'plan','none',2)" data-cls="danger-opt">&#10060; No plan</button>
+      <button class="q-opt" onclick="selectOpt(this,'plan','written',10)">Written with rules</button>
+      <button class="q-opt" onclick="selectOpt(this,'plan','mental',6)" data-cls="warn-opt">Mental plan only</button>
+      <button class="q-opt" onclick="selectOpt(this,'plan','none',2)" data-cls="danger-opt">No plan</button>
     </div>
   </div>
   <div class="phase-nav">
-    <button class="nav-btn secondary" onclick="nextPhase(1)">&#8592; BACK</button>
-    <button class="nav-btn primary" onclick="nextPhase(3)">NEXT: DEEP PSYCHOLOGY &#8594;</button>
+    <button class="nav-btn secondary" onclick="nextPhase(1)">BACK</button>
+    <button class="nav-btn primary" onclick="nextPhase(3)">NEXT: DEEP PSYCHOLOGY</button>
   </div>
 </div>
 <div class="phase" id="phase-3">
-  <div class="phase-hdr">Phase 04 &#8212; Deep Psychology Probe</div>
+  <div class="phase-hdr">Phase 04 -- Deep Psychology Probe</div>
   <div class="q-card">
     <div class="q-num">NEURO-11 / LOSS ACCEPTANCE</div>
-    <div class="q-text">If this trade hits stop-loss, how will you feel?</div>
+    <div class="q-text">If this trade hits stop-loss, how will you honestly feel?</div>
     <div class="q-options">
       <button class="q-opt" onclick="selectOpt(this,'loss_accept','fine',10)">Part of the game</button>
       <button class="q-opt" onclick="selectOpt(this,'loss_accept','annoyed',6)" data-cls="warn-opt">Annoyed but in control</button>
-      <button class="q-opt" onclick="selectOpt(this,'loss_accept','upset',3)" data-cls="warn-opt">Upset &#8212; will affect mood</button>
+      <button class="q-opt" onclick="selectOpt(this,'loss_accept','upset',3)" data-cls="warn-opt">Upset</button>
       <button class="q-opt" onclick="selectOpt(this,'loss_accept','devastated',0)" data-cls="danger-opt">Devastated</button>
     </div>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-12 / LAST 3 TRADES</div>
     <div class="q-text">How did your last 3 trades go?</div>
+    <div class="q-pattern-note" id="trades-pattern-note" style="display:none;"></div>
     <div class="q-options">
-      <button class="q-opt" onclick="selectOpt(this,'last3','winning',10)">&#128200; All profitable</button>
-      <button class="q-opt" onclick="selectOpt(this,'last3','mixed',7)">&#8597; Mixed results</button>
+      <button class="q-opt" onclick="selectOpt(this,'last3','winning',10)">All profitable</button>
+      <button class="q-opt" onclick="selectOpt(this,'last3','mixed',7)">Mixed results</button>
       <button class="q-opt" onclick="selectOpt(this,'last3','two_losses',3)" data-cls="warn-opt">2 losses</button>
-      <button class="q-opt" onclick="selectOpt(this,'last3','three_losses',0)" data-cls="danger-opt">&#128680; 3 consecutive losses</button>
-      <button class="q-opt" onclick="selectOpt(this,'last3','new',8)">&#128290; New session</button>
+      <button class="q-opt" onclick="selectOpt(this,'last3','three_losses',0)" data-cls="danger-opt">3 consecutive losses TILT RISK</button>
+      <button class="q-opt" onclick="selectOpt(this,'last3','new',8)">New session</button>
     </div>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-13 / FREE EXPRESSION</div>
-    <div class="q-text">In one sentence &#8212; what is on your mind right now?</div>
+    <div class="q-text">In one sentence, what is on your mind right now?</div>
     <div class="q-sub">Background stress leaks into trading. Express it to isolate it.</div>
     <textarea class="q-input" id="q-freetext" placeholder="Type anything..." oninput="onFreeText(this.value)"></textarea>
   </div>
   <div class="q-card">
     <div class="q-num">NEURO-14 / CONFIDENCE CALIBRATION</div>
     <div class="q-text">Rate your trading confidence right now</div>
+    <div class="q-sub">Both overconfidence AND under-confidence are dangerous.</div>
     <div class="q-slider-wrap"><input type="range" class="q-slider" id="q-confidence" min="1" max="10" step="1" value="5" oninput="updateSlider('confidence',this.value)"/><div class="slider-labels"><span>Zero</span><span>Uncertain</span><span>Balanced</span><span>Confident</span><span>Overconfident</span></div></div>
-    <div id="confidence-feedback" style="font-family:'Share Tech Mono',monospace;font-size:11px;margin-top:8px;"></div>
+    <div id="confidence-feedback" style="font-family:Share Tech Mono,monospace;font-size:11px;margin-top:8px;"></div>
   </div>
   <div class="phase-nav">
-    <button class="nav-btn secondary" onclick="nextPhase(2)">&#8592; BACK</button>
-    <button class="nav-btn primary" onclick="runAnalysis()">&#9889; RUN PSYCHOLOGICAL ANALYSIS</button>
+    <button class="nav-btn secondary" onclick="nextPhase(2)">BACK</button>
+    <button class="nav-btn primary" onclick="runAnalysis()">RUN PSYCHOLOGICAL ANALYSIS</button>
   </div>
 </div>
 <div class="processing" id="processing">
   <div class="proc-brain"></div>
   <div class="proc-title">ANALYZING NEURAL PROFILE...</div>
   <div class="proc-steps">
-    <span id="ps1">&#9656; Scanning biometric baseline...</span>
-    <span id="ps2">&#9656; Mapping emotional state...</span>
-    <span id="ps3">&#9656; Detecting behavioral patterns...</span>
-    <span id="ps4">&#9656; Building emotion fingerprint...</span>
-    <span id="ps5">&#9656; AI psychological profiling...</span>
-    <span id="ps6">&#9656; Generating clearance verdict...</span>
+    <span id="ps1">Scanning biometric baseline...</span>
+    <span id="ps2">Mapping emotional state...</span>
+    <span id="ps3">Detecting behavioral patterns...</span>
+    <span id="ps4">Checking pattern history...</span>
+    <span id="ps5">AI psychological profiling...</span>
+    <span id="ps6">Generating clearance verdict...</span>
   </div>
 </div>
 <div class="verdict" id="verdict-screen">
@@ -358,60 +381,219 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <div class="verdict-score-ring" id="verdict-ring"><div class="verdict-score-num" id="verdict-score"></div><div class="verdict-score-lbl">NEURO SCORE</div></div>
     <div class="verdict-msg" id="verdict-msg"></div>
   </div>
-  <div class="trade-allowance-box" id="trade-allowance-box">
-    <div class="ta-inner">
-      <div class="ta-hdr">&#9889; YOUR TRADING ALLOWANCE TODAY</div>
-      <div class="ta-layout">
-        <div class="ta-num" id="trades-allowed-num"></div>
-        <div>
-          <div class="ta-reason" id="trades-allowed-reason"></div>
-          <div class="ta-slots" id="trade-slots"></div>
-        </div>
-      </div>
-      <div class="ta-rule" id="trade-allowance-rule"></div>
+  <div class="ta-box" id="ta-box">
+    <div class="ta-hdr">YOUR TRADING ALLOWANCE TODAY</div>
+    <div class="ta-layout">
+      <div class="ta-num" id="ta-num"></div>
+      <div><div class="ta-reason" id="ta-reason"></div><div class="ta-slots" id="ta-slots"></div></div>
     </div>
+    <div class="ta-rule" id="ta-rule"></div>
   </div>
-  <div style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:10px;">NEUROLOGICAL METRICS <span style="flex:1;height:1px;background:var(--border);display:block;"></span></div>
+  <div class="pattern-insights" id="pattern-insights">
+    <div class="pi-title">YOUR PERSONAL PATTERN ANALYSIS</div>
+    <div id="pi-items"></div>
+  </div>
+  <div style="font-family:Share Tech Mono,monospace;font-size:9px;letter-spacing:4px;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:10px;">NEUROLOGICAL METRICS <span style="flex:1;height:1px;background:var(--border);display:block;"></span></div>
   <div class="neuro-grid" id="neuro-grid"></div>
-  <div class="fingerprint"><div class="fp-title">&#129518; YOUR EMOTION FINGERPRINT</div><div class="fp-items" id="fp-items"></div></div>
-  <div class="ai-msg"><div class="ai-msg-hdr">&#129302; SMALLCHANGE AI PSYCHOLOGICAL ANALYSIS</div><div class="ai-msg-body" id="ai-msg-body"></div></div>
-  <div class="rx"><div class="rx-title">&#128138; PRESCRIPTIONS FOR THIS SESSION</div><div id="rx-items"></div></div>
+  <div class="fingerprint"><div class="fp-title">YOUR EMOTION FINGERPRINT</div><div id="fp-items"></div></div>
+  <div class="ai-msg"><div class="ai-msg-hdr">SMALLCHANGE AI PSYCHOLOGICAL ANALYSIS</div><div class="ai-msg-body" id="ai-msg-body"></div></div>
+  <div class="rx"><div class="rx-title">PRESCRIPTIONS FOR THIS SESSION</div><div id="rx-items"></div></div>
   <div class="rules-box" id="rules-box"><div class="rules-title" id="rules-title"></div><ul class="rules-list" id="rules-list"></ul></div>
-  <div class="retest-box" id="retest-box" style="display:none"><div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);">COOLDOWN BEFORE RETESTING</div><div class="retest-timer" id="retest-timer">30:00</div></div>
+  <div class="retest-box" id="retest-box" style="display:none"><div style="font-family:Share Tech Mono,monospace;font-size:10px;letter-spacing:3px;color:var(--dim);">COOLDOWN BEFORE RETESTING</div><div class="retest-timer" id="retest-timer">30:00</div></div>
   <div class="verdict-nav">
-    <button class="v-btn go" id="go-trade-btn" onclick="goTrade()" style="display:none">&#10003; CLEARED &#8212; GO TO ANALYSIS</button>
-    <button class="v-btn retry" onclick="retakeAssessment()">&#8635; RETAKE</button>
-    <button class="v-btn reset" onclick="resetAll()">&#8634; RESET</button>
+    <button class="v-btn go" id="go-btn" style="display:none" onclick="window.location.href='index.html'">CLEARED - GO TRADE</button>
+    <button class="v-btn retry" onclick="retake()">RETAKE</button>
+    <button class="v-btn reset" onclick="resetAll()">RESET</button>
   </div>
-  <div style="margin-top:28px;">
-    <div style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--dim);margin-bottom:10px;display:flex;align-items:center;gap:10px;">CLEARANCE HISTORY <span style="flex:1;height:1px;background:var(--border);display:block;"></span></div>
+  <div class="history-section">
+    <div class="history-title">CLEARANCE HISTORY</div>
     <div id="history-rows"></div>
   </div>
 </div>
 </div>
 <script>
-const RAILWAY_URL='https://small-change-production.up.railway.app';
-function scoreColor(s){return s>=72?'var(--green)':s>=50?'var(--yellow)':'var(--red)';}
-const canvas=document.getElementById('neural-bg');
-const ctx=canvas.getContext('2d');
-let nodes=[];
+const RAILWAY_URL = 'https://small-change-production.up.railway.app';
+
+// Neural background
+const canvas = document.getElementById('neural-bg');
+const ctx = canvas.getContext('2d');
+let nodes = [];
 function initCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;nodes=Array.from({length:60},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+1}));}
 function drawNeural(){ctx.clearRect(0,0,canvas.width,canvas.height);nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>canvas.width)n.vx*=-1;if(n.y<0||n.y>canvas.height)n.vy*=-1;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(0,170,255,.4)';ctx.fill();});for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(0,170,255,${.15*(1-dist/120)})`;ctx.lineWidth=.5;ctx.stroke();}}}requestAnimationFrame(drawNeural);}
 initCanvas();drawNeural();window.addEventListener('resize',initCanvas);
-const answers={};
-let liveScore=50;
-const sliderFeedback={
-  sleep:v=>{const n=parseInt(v);const msgs=['&#9888; Severe impairment','&#9888; Critical sleep debt','&#128308; High risk','&#128308; Below optimal','&#128993; Borderline','&#128993; Acceptable','&#10003; Good','&#10003; Optimal','&#10003; Excellent','&#10003; Perfect','&#10003; Well rested'];const colors=['#ff2244','#ff2244','#ff2244','#ff6644','#ffcc00','#ffcc00','#00ff88','#00ff88','#00ff88','#00ff88','#00ff88'];const el=document.getElementById('sleep-feedback');el.innerHTML=msgs[n]||'';el.style.color=colors[n]||'';answers.sleep=n;calcLiveScore();},
-  mood:v=>{const n=parseInt(v);const msgs=['','&#128680; Extremely dysregulated','&#128308; Very anxious','&#128308; Stressed','&#128993; Uneasy','&#128993; Slightly off','&#10003; Neutral','&#10003; Calm','&#10003; Focused','&#10003; Excellent','&#10003; Peak calm'];const colors=['','#ff2244','#ff2244','#ff6644','#ffcc00','#ffcc00','#00ff88','#00ff88','#00ff88','#00ff88','#00ff88'];const el=document.getElementById('mood-feedback');el.innerHTML=msgs[n]||'';el.style.color=colors[n]||'';answers.mood=n;calcLiveScore();},
-  confidence:v=>{const n=parseInt(v);const msgs=['','&#10060; No confidence','&#128308; Under-confident','&#128993; Low','&#128993; Uncertain','&#10003; Balanced','&#10003; Good','&#10003; Strong','&#9888; High &#8212; watch overconfidence','&#128680; Overconfident','&#128680; Dangerous overconfidence'];const colors=['','#ff2244','#ff6644','#ffcc00','#ffcc00','#00ff88','#00ff88','#00ff88','#ffcc00','#ff6644','#ff2244'];const el=document.getElementById('confidence-feedback');el.innerHTML=msgs[n]||'';el.style.color=colors[n]||'';answers.confidence=n;calcLiveScore();}
-};
-function updateSlider(type,val){sliderFeedback[type]?.(val);}
-function selectOpt(btn,key,val,score){const parent=btn.closest('.q-options');parent.querySelectorAll('.q-opt').forEach(b=>{b.classList.remove('selected','danger-opt','warn-opt');});btn.classList.add('selected');if(btn.dataset.cls)btn.classList.add(btn.dataset.cls);answers[key]={val,score};btn.closest('.q-card').classList.add('answered');if(score<=2)btn.closest('.q-card').classList.add('danger');else if(score<=5)btn.closest('.q-card').classList.add('warning');calcLiveScore();}
-function onFreeText(val){answers.freetext=val;const stressWords=['stress','anxiety','worried','scared','angry','frustrated','upset','depressed','anxious','panic','desperate'];answers.freetext_stressed=stressWords.some(w=>val.toLowerCase().includes(w));calcLiveScore();}
-function calcLiveScore(){let score=0,total=0;const sleep=parseInt(document.getElementById('q-sleep')?.value||5);score+=Math.min(10,sleep)*15;total+=100;if(answers.physical){score+=answers.physical.score*8;total+=80;}if(answers.substances){score+=answers.substances.score*8;total+=80;}const mood=parseInt(document.getElementById('q-mood')?.value||5);score+=(mood-1)/9*100*20;total+=2000;if(answers.recent_loss){score+=answers.recent_loss.score*12;total+=120;}if(answers.motivation){score+=answers.motivation.score*12;total+=120;}if(answers.pressure){score+=answers.pressure.score*15;total+=150;}if(answers.trades_today){score+=answers.trades_today.score*8;total+=80;}if(answers.screen_time){score+=answers.screen_time.score*6;total+=60;}if(answers.plan){score+=answers.plan.score*10;total+=100;}if(answers.loss_accept){score+=answers.loss_accept.score*10;total+=100;}if(answers.last3){score+=answers.last3.score*10;total+=100;}if(answers.freetext_stressed)score-=5;const conf=parseInt(document.getElementById('q-confidence')?.value||5);const confScore=conf<=3?conf*2:conf<=6?10:10-(conf-6)*2;score+=confScore*8;total+=80;const pct=total>0?Math.round((score/total)*100):50;liveScore=Math.max(0,Math.min(100,pct));const el=document.getElementById('live-score');if(el){el.textContent=liveScore;el.style.color=scoreColor(liveScore);}updateStateIndicator(liveScore);}
 
-function updateStateIndicator(score){const dot=document.getElementById('state-dot');const label=document.getElementById('state-label');const sub=document.getElementById('state-sublabel');if(score>=72){dot.style.background=dot.style.color='var(--green)';dot.classList.add('active');label.style.color='var(--green)';label.textContent='OPTIMAL';sub.textContent='Neural state clear for trading';}else if(score>=50){dot.style.background=dot.style.color='var(--yellow)';dot.classList.add('active');label.style.color='var(--yellow)';label.textContent='CAUTION';sub.textContent='Trade with reduced size';}else{dot.style.background=dot.style.color='var(--red)';dot.classList.add('active');label.style.color='var(--red)';label.textContent='COMPROMISED';sub.textContent='Not cleared for trading';}}
-function nextPhase(n){document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));document.getElementById(`phase-${n}`).classList.add('active');document.querySelectorAll('.pp-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active');});window.scrollTo({top:0,behavior:'smooth'});}
+// State
+const answers = {};
+let liveScore = 50;
+
+function scoreColor(s){return s>=72?'var(--green)':s>=50?'var(--yellow)':'var(--red)';}
+
+// Pattern Memory System
+function getHistory(){
+  try{return JSON.parse(localStorage.getItem('sc_neuro_history')||'[]');}catch(e){return [];}
+}
+
+function saveToHistory(verdict, score, data){
+  const hist = getHistory();
+  hist.unshift({
+    date: new Date().toDateString(),
+    time: new Date().toLocaleTimeString(),
+    verdict, score,
+    dayOfWeek: new Date().getDay(),
+    sleepScore: data.sleep||5,
+    hadLoss: data.recent_loss?.val !== 'no',
+    tookTrade: false
+  });
+  localStorage.setItem('sc_neuro_history', JSON.stringify(hist.slice(0,60)));
+}
+
+function analyzePatterns(){
+  const hist = getHistory();
+  if(hist.length < 3) return [];
+  const warnings = [];
+  const today = new Date().getDay();
+
+  // Pattern 1: Day of week pattern
+  const sameDayEntries = hist.filter(h => h.dayOfWeek === today);
+  if(sameDayEntries.length >= 3){
+    const avgScore = sameDayEntries.reduce((s,h)=>s+h.score,0)/sameDayEntries.length;
+    if(avgScore < 55){
+      const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      warnings.push({
+        icon: '📅',
+        text: `Your last ${sameDayEntries.length} ${dayNames[today]}s averaged a neuro score of ${Math.round(avgScore)}. This is a historically difficult day for you. Extra caution required.`
+      });
+    }
+  }
+
+  // Pattern 2: Consecutive low scores
+  const recent5 = hist.slice(0,5);
+  const lowScores = recent5.filter(h=>h.score<55);
+  if(lowScores.length >= 3){
+    warnings.push({
+      icon: '📉',
+      text: `${lowScores.length} of your last 5 sessions scored below 55. Your psychological state has been compromised recently. Mark Douglas: Take a break before continuing.`
+    });
+  }
+
+  // Pattern 3: Sleep pattern
+  const recentSleep = hist.slice(0,7).filter(h=>h.sleepScore<5);
+  if(recentSleep.length >= 4){
+    warnings.push({
+      icon: '😴',
+      text: `You have had poor sleep in ${recentSleep.length} of your last 7 sessions. Chronic sleep deprivation is destroying your decision-making. Consider a trading break.`
+    });
+  }
+
+  // Pattern 4: Loss pattern
+  const recentLoss = hist.slice(0,5).filter(h=>h.hadLoss);
+  if(recentLoss.length >= 3){
+    warnings.push({
+      icon: '💸',
+      text: `You reported losses in ${recentLoss.length} of your last 5 sessions. This matches the Tilt State pattern from Trading in the Zone. Reduce position size significantly today.`
+    });
+  }
+
+  return warnings;
+}
+
+function showPatternWarnings(){
+  const warnings = analyzePatterns();
+  if(warnings.length === 0) return;
+
+  const box = document.getElementById('pattern-warning');
+  const items = document.getElementById('pw-items');
+  box.style.display = 'block';
+  items.innerHTML = warnings.map(w =>
+    `<div class="pw-item"><div class="pw-icon">${w.icon}</div><div>${w.text}</div></div>`
+  ).join('');
+
+  // Show pattern notes on relevant questions
+  const hist = getHistory();
+  const today = new Date().getDay();
+  const sameDayLoss = hist.filter(h=>h.dayOfWeek===today&&h.hadLoss);
+  if(sameDayLoss.length>=2){
+    const note = document.getElementById('loss-pattern-note');
+    if(note){note.style.display='block';note.textContent='PATTERN ALERT: You have reported losses on this day of the week '+sameDayLoss.length+' times in your history.';}
+  }
+  const recentHigh = hist.slice(0,5).filter(h=>h.score>75&&h.tookTrade);
+  if(recentHigh.length>=2){
+    const note = document.getElementById('freq-pattern-note');
+    if(note){note.style.display='block';note.textContent='PATTERN ALERT: After high-confidence sessions you tend to overtrade. Stay disciplined today.';}
+  }
+}
+
+// Slider feedback
+const sliderFeedback = {
+  sleep: v=>{const n=parseInt(v);const msgs=['Severe impairment DO NOT TRADE','Critical sleep debt','High risk judgment impaired','Below optimal','Borderline','Acceptable','Good','Optimal','Excellent','Perfect','Well rested'];const colors=['#ff2244','#ff2244','#ff2244','#ff6644','#ffcc00','#ffcc00','#00ff88','#00ff88','#00ff88','#00ff88','#00ff88'];const el=document.getElementById('sleep-feedback');el.textContent=msgs[n]||'';el.style.color=colors[n]||'';answers.sleep=n;calcLiveScore();},
+  mood: v=>{const n=parseInt(v);const msgs=['','Extremely dysregulated','Very anxious','Stressed','Uneasy','Slightly off','Neutral acceptable','Calm','Focused','Excellent','Peak calm ideal'];const colors=['','#ff2244','#ff2244','#ff6644','#ffcc00','#ffcc00','#00ff88','#00ff88','#00ff88','#00ff88','#00ff88'];const el=document.getElementById('mood-feedback');el.textContent=msgs[n]||'';el.style.color=colors[n]||'';answers.mood=n;calcLiveScore();},
+  confidence: v=>{const n=parseInt(v);const msgs=['','No confidence','Under-confident','Low','Uncertain','Balanced ideal','Good','Strong','Watch overconfidence','Overconfident','Dangerous overconfidence'];const colors=['','#ff2244','#ff6644','#ffcc00','#ffcc00','#00ff88','#00ff88','#00ff88','#ffcc00','#ff6644','#ff2244'];const el=document.getElementById('confidence-feedback');el.textContent=msgs[n]||'';el.style.color=colors[n]||'';answers.confidence=n;calcLiveScore();}
+};
+
+function updateSlider(type,val){sliderFeedback[type]?.(val);}
+
+function selectOpt(btn,key,val,score){
+  const parent=btn.closest('.q-options');
+  parent.querySelectorAll('.q-opt').forEach(b=>{b.classList.remove('selected','danger-opt','warn-opt');});
+  btn.classList.add('selected');
+  if(btn.dataset.cls)btn.classList.add(btn.dataset.cls);
+  answers[key]={val,score};
+  btn.closest('.q-card').classList.add('answered');
+  if(score<=2)btn.closest('.q-card').classList.add('danger');
+  else if(score<=5)btn.closest('.q-card').classList.add('warning');
+  calcLiveScore();
+}
+
+function onFreeText(val){
+  answers.freetext=val;
+  const stressWords=['stress','anxiety','worried','scared','angry','frustrated','upset','depressed','anxious','panic','desperate'];
+  answers.freetext_stressed=stressWords.some(w=>val.toLowerCase().includes(w));
+  calcLiveScore();
+}
+
+function calcLiveScore(){
+  let score=0,total=0;
+  const sleep=parseInt(document.getElementById('q-sleep')?.value||5);
+  score+=Math.min(10,sleep)*15;total+=100;
+  if(answers.physical){score+=answers.physical.score*8;total+=80;}
+  if(answers.substances){score+=answers.substances.score*8;total+=80;}
+  const mood=parseInt(document.getElementById('q-mood')?.value||5);
+  score+=(mood-1)/9*100*20;total+=2000;
+  if(answers.recent_loss){score+=answers.recent_loss.score*12;total+=120;}
+  if(answers.motivation){score+=answers.motivation.score*12;total+=120;}
+  if(answers.pressure){score+=answers.pressure.score*15;total+=150;}
+  if(answers.trades_today){score+=answers.trades_today.score*8;total+=80;}
+  if(answers.screen_time){score+=answers.screen_time.score*6;total+=60;}
+  if(answers.plan){score+=answers.plan.score*10;total+=100;}
+  if(answers.loss_accept){score+=answers.loss_accept.score*10;total+=100;}
+  if(answers.last3){score+=answers.last3.score*10;total+=100;}
+  if(answers.freetext_stressed)score-=5;
+  const conf=parseInt(document.getElementById('q-confidence')?.value||5);
+  const confScore=conf<=3?conf*2:conf<=6?10:10-(conf-6)*2;
+  score+=confScore*8;total+=80;
+  const pct=total>0?Math.round((score/total)*100):50;
+  liveScore=Math.max(0,Math.min(100,pct));
+  const el=document.getElementById('live-score');
+  if(el){el.textContent=liveScore;el.style.color=scoreColor(liveScore);}
+  updateStateIndicator(liveScore);
+}
+
+function updateStateIndicator(score){
+  const dot=document.getElementById('state-dot');
+  const label=document.getElementById('state-label');
+  const sub=document.getElementById('state-sublabel');
+  if(score>=72){dot.style.background=dot.style.color='var(--green)';label.style.color='var(--green)';label.textContent='OPTIMAL';sub.textContent='Neural state clear for trading';}
+  else if(score>=50){dot.style.background=dot.style.color='var(--yellow)';label.style.color='var(--yellow)';label.textContent='CAUTION';sub.textContent='Trade with reduced size';}
+  else{dot.style.background=dot.style.color='var(--red)';label.style.color='var(--red)';label.textContent='COMPROMISED';sub.textContent='Not cleared for trading';}
+}
+
+function nextPhase(n){
+  document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));
+  document.getElementById('phase-'+n).classList.add('active');
+  document.querySelectorAll('.pp-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 async function runAnalysis(){
   document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));
   document.getElementById('phase-dots').style.display='none';
@@ -419,69 +601,111 @@ async function runAnalysis(){
   const steps=['ps1','ps2','ps3','ps4','ps5','ps6'];
   let i=0;
   const iv=setInterval(()=>{if(i>0)document.getElementById(steps[i-1]).className='done';if(i<steps.length){document.getElementById(steps[i]).className='active';i++;}else clearInterval(iv);},600);
-  const freetext=document.getElementById('q-freetext')?.value||'';
-  const sleepVal=document.getElementById('q-sleep')?.value||5;
-  const moodVal=document.getElementById('q-mood')?.value||5;
-  const confVal=document.getElementById('q-confidence')?.value||5;
-  const prompt=`You are SmallChange NeuroTrader AI. Analyze this trader's psychological state and give a verdict.
-ASSESSMENT: Sleep=${sleepVal}h, Physical=${answers.physical?.val||'unknown'}, Substances=${answers.substances?.val||'unknown'}, Mood=${moodVal}/10, Recent loss=${answers.recent_loss?.val||'none'}, Motivation=${answers.motivation?.val||'unknown'}, Financial pressure=${answers.pressure?.val||'unknown'}, Trades today=${answers.trades_today?.val||'unknown'}, Screen time=${answers.screen_time?.val||'unknown'}, Plan=${answers.plan?.val||'unknown'}, Loss acceptance=${answers.loss_accept?.val||'unknown'}, Last 3 trades=${answers.last3?.val||'unknown'}, Confidence=${confVal}/10, Free expression="${freetext}", Neuro score=${liveScore}/100
-Respond ONLY valid JSON:{"verdict":"CLEARED or CAUTION or BLOCKED","neuro_score":${liveScore},"metrics":{"cortisol_level":"LOW/MODERATE/HIGH/CRITICAL","cortisol_pct":35,"dopamine_state":"BALANCED/DEPLETED/ELEVATED","dopamine_pct":60,"prefrontal_activity":"HIGH/MODERATE/IMPAIRED","prefrontal_pct":75,"amygdala_state":"CALM/REACTIVE/HYPERACTIVE","amygdala_pct":25},"emotion_fingerprint":[{"emotion":"Fear","level":20,"color":"#ff6644"},{"emotion":"Greed","level":15,"color":"#ffcc00"},{"emotion":"Overconfidence","level":10,"color":"#ff2244"},{"emotion":"FOMO","level":5,"color":"#aa44ff"},{"emotion":"Revenge Urge","level":0,"color":"#ff2244"},{"emotion":"Clarity","level":80,"color":"#00ff88"},{"emotion":"Discipline","level":75,"color":"#00aaff"}],"ai_analysis":"3-4 sentences deep psychological analysis","primary_risk":"biggest risk right now","prescriptions":[{"icon":"emoji","text":"specific prescription"},{"icon":"emoji","text":"prescription"},{"icon":"emoji","text":"prescription"}],"trading_rules":["rule1","rule2","rule3","rule4"],"no_trade_reason":"if BLOCKED explain why","cooldown_minutes":0}`;
+  const patternWarnings = analyzePatterns();
+  const patternContext = patternWarnings.length>0 ? 'Pattern history: '+patternWarnings.map(w=>w.text).join(' | ') : 'No significant patterns detected yet.';
+  const prompt = 'You are SmallChange NeuroTrader AI. Analyze this trader psychology. Sleep='+( document.getElementById('q-sleep')?.value||5)+'h, Mood='+(document.getElementById('q-mood')?.value||5)+'/10, Physical='+( answers.physical?.val||'unknown')+', Substances='+(answers.substances?.val||'unknown')+', Recent loss='+(answers.recent_loss?.val||'none')+', Motivation='+(answers.motivation?.val||'unknown')+', Pressure='+(answers.pressure?.val||'unknown')+', Trades today='+(answers.trades_today?.val||'unknown')+', Plan='+(answers.plan?.val||'unknown')+', Last 3='+(answers.last3?.val||'unknown')+', Confidence='+(document.getElementById('q-confidence')?.value||5)+'/10, Free text="'+(document.getElementById('q-freetext')?.value||'')+'", Neuro score='+liveScore+'/100. '+patternContext+'. Respond ONLY valid JSON: {"verdict":"CLEARED or CAUTION or BLOCKED","neuro_score":'+liveScore+',"metrics":{"cortisol_level":"LOW or MODERATE or HIGH","cortisol_pct":35,"dopamine_state":"BALANCED or DEPLETED or ELEVATED","dopamine_pct":60,"prefrontal_activity":"HIGH or MODERATE or IMPAIRED","prefrontal_pct":75,"amygdala_state":"CALM or REACTIVE or HYPERACTIVE","amygdala_pct":25},"emotion_fingerprint":[{"emotion":"Fear","level":20,"color":"#ff6644"},{"emotion":"Greed","level":15,"color":"#ffcc00"},{"emotion":"Clarity","level":80,"color":"#00ff88"},{"emotion":"Discipline","level":75,"color":"#00aaff"},{"emotion":"FOMO","level":10,"color":"#aa44ff"},{"emotion":"Revenge Urge","level":5,"color":"#ff2244"}],"ai_analysis":"3-4 sentences deep psychological analysis mentioning specific patterns from Trading in the Zone or Market Wizards if relevant","prescriptions":[{"icon":"emoji","text":"prescription"},{"icon":"emoji","text":"prescription"},{"icon":"emoji","text":"prescription"}],"trading_rules":["rule1","rule2","rule3","rule4"],"no_trade_reason":"if BLOCKED","cooldown_minutes":0}';
   try{
     await new Promise(r=>setTimeout(r,3800));
-    const res=await fetch(`${RAILWAY_URL}/api/analyze`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch(RAILWAY_URL+'/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
     const data=await res.json();
     if(!res.ok)throw new Error(data.error?.message||'API error');
     const raw=data.content?.map(b=>b.text||'').join('')||'';
     const clean=raw.replace(/```json|```/g,'').trim();
-    let d;try{d=JSON.parse(clean);}catch(e){d={verdict:liveScore>=72?'CLEARED':liveScore>=50?'CAUTION':'BLOCKED',neuro_score:liveScore,metrics:{cortisol_level:'MODERATE',cortisol_pct:40,dopamine_state:'BALANCED',dopamine_pct:60,prefrontal_activity:'MODERATE',prefrontal_pct:65,amygdala_state:'CALM',amygdala_pct:30},emotion_fingerprint:[{emotion:'Fear',level:20,color:'#ff6644'},{emotion:'Greed',level:15,color:'#ffcc00'},{emotion:'Clarity',level:liveScore,color:'#00ff88'},{emotion:'Discipline',level:liveScore-10,color:'#00aaff'}],ai_analysis:'Assessment complete. Your psychological profile has been analyzed.',primary_risk:liveScore<50?'Emotional dysregulation':'Maintain discipline',prescriptions:[{icon:'&#129518;',text:'Take 5 deep breaths before entering any trade'},{icon:'&#128221;',text:'Review your trading plan before executing'},{icon:'&#9203;',text:'Wait for clear confirmation before entry'}],trading_rules:['Stick to your stop-loss no matter what','Maximum trades per your allowance','Do not move stop-loss once set','Exit at target'],cooldown_minutes:liveScore<50?30:0};}
+    let d;
+    try{d=JSON.parse(clean);}
+    catch(e){d={verdict:liveScore>=72?'CLEARED':liveScore>=50?'CAUTION':'BLOCKED',neuro_score:liveScore,metrics:{cortisol_level:'MODERATE',cortisol_pct:40,dopamine_state:'BALANCED',dopamine_pct:60,prefrontal_activity:'MODERATE',prefrontal_pct:65,amygdala_state:'CALM',amygdala_pct:30},emotion_fingerprint:[{emotion:'Fear',level:20,color:'#ff6644'},{emotion:'Greed',level:15,color:'#ffcc00'},{emotion:'Clarity',level:liveScore,color:'#00ff88'},{emotion:'Discipline',level:liveScore-10,color:'#00aaff'}],ai_analysis:'Assessment complete. Your psychological profile has been analyzed.',prescriptions:[{icon:'🧘',text:'Take 5 deep breaths before entering any trade'},{icon:'📝',text:'Review your trading plan before executing'},{icon:'⏱',text:'Wait for confirmation before entry'}],trading_rules:['Stick to your stop-loss no matter what','Maximum trades per your allowance','Do not move stop-loss once set','Exit at target'],cooldown_minutes:liveScore<50?30:0};}
     document.getElementById('processing').style.display='none';
     renderVerdict(d);
-  }catch(err){document.getElementById('processing').style.display='none';document.getElementById('phase-dots').style.display='flex';nextPhase(3);alert('Error: '+err.message);}
+    saveToHistory(d.verdict, d.neuro_score||liveScore, answers);
+  }catch(err){
+    document.getElementById('processing').style.display='none';
+    document.getElementById('phase-dots').style.display='flex';
+    nextPhase(3);
+    alert('Error: '+err.message);
+  }
 }
+
 function renderVerdict(d){
   const screen=document.getElementById('verdict-screen');screen.style.display='block';
   const v=d.verdict;const score=d.neuro_score||liveScore;
-  const hero=document.getElementById('verdict-hero');hero.className='verdict-hero '+(v==='CLEARED'?'cleared':v==='CAUTION'?'caution':'blocked');
-  document.getElementById('verdict-icon').textContent=v==='CLEARED'?'&#10003;':v==='CAUTION'?'&#9888;':'&#128683;';
-  document.getElementById('verdict-status').innerHTML=v==='CLEARED'?'CLEARED FOR TRADING':v==='CAUTION'?'TRADE WITH CAUTION':'TRADING BLOCKED';
+  const hero=document.getElementById('verdict-hero');
+  hero.className='verdict-hero '+(v==='CLEARED'?'cleared':v==='CAUTION'?'caution':'blocked');
+  document.getElementById('verdict-icon').textContent=v==='CLEARED'?'✅':v==='CAUTION'?'⚠️':'🚫';
+  document.getElementById('verdict-status').textContent=v==='CLEARED'?'CLEARED FOR TRADING':v==='CAUTION'?'TRADE WITH CAUTION':'TRADING BLOCKED';
   document.getElementById('verdict-score').textContent=score;
   const ring=document.getElementById('verdict-ring');ring.style.borderColor=ring.style.color=v==='CLEARED'?'var(--green)':v==='CAUTION'?'var(--yellow)':'var(--red)';
-  const msgs={CLEARED:'Your neural state is optimized for trading. You are cleared to proceed.',CAUTION:'Moderate emotional interference detected. Trade with reduced size and be especially disciplined.',BLOCKED:d.no_trade_reason||'Critical psychological risk. Trading now would likely result in losses.'};
+  const msgs={CLEARED:'Your neural state is optimized for trading. You are cleared to proceed.',CAUTION:'Moderate emotional interference. Trade with reduced size and be disciplined about stop-losses.',BLOCKED:d.no_trade_reason||'Critical psychological risk detected. Do not trade today.'};
   document.getElementById('verdict-msg').textContent=msgs[v];
   const tradesAllowed=v==='CLEARED'?(score>=85?3:2):v==='CAUTION'?1:0;
   const tradeColors={3:'var(--green)',2:'var(--green)',1:'var(--yellow)',0:'var(--red)'};
-  const tradeReasons={3:'Peak neural state. Maximum 3 high-quality setups allowed.',2:'Good clarity. 2 trades maximum &#8212; quality over quantity.',1:'Moderate risk. ONE trade only &#8212; make it your best setup.',0:'Neural state compromised. Zero trades. Study charts only.'};
-  const tradeRules={3:'&#127919; Each trade must match ALL 3 timeframe confirmations.',2:'&#127919; Skip any setup you feel uncertain about. 2 chances &#8212; use them wisely.',1:'&#127919; Wait for your single best setup. One bullet &#8212; make it count.',0:'&#128218; Upload charts, read analysis, write journal. Come back tomorrow.'};
-  const taBox=document.getElementById('trade-allowance-box');taBox.style.display='block';
-  const numEl=document.getElementById('trades-allowed-num');numEl.innerHTML=tradesAllowed;numEl.style.color=tradeColors[tradesAllowed];
-  document.getElementById('trades-allowed-reason').innerHTML=tradeReasons[tradesAllowed];
-  document.getElementById('trade-allowance-rule').innerHTML=tradeRules[tradesAllowed];
-  const slots=document.getElementById('trade-slots');slots.innerHTML=[1,2,3].map(i=>`<div class="ta-slot" style="border-color:${i<=tradesAllowed?tradeColors[tradesAllowed]:'var(--border)'};color:${i<=tradesAllowed?tradeColors[tradesAllowed]:'var(--dim)'};background:${i<=tradesAllowed?'rgba(0,255,136,.06)':'var(--p2)'}">${i<=tradesAllowed?i:'&#8212;'}</div>`).join('');
+  const tradeReasons={3:'Peak neural state. Maximum 3 high-quality setups allowed.',2:'Good clarity. 2 trades maximum - quality over quantity.',1:'Moderate risk. ONE trade only - make it your best setup.',0:'Neural state compromised. Zero trades today. Study only.'};
+  const tradeRules={3:'Each trade must match all 3 timeframe confirmations. Stop after 3.',2:'Skip any setup you feel uncertain about. 2 chances - use them wisely.',1:'Wait for your single best setup. One bullet - make it count.',0:'Upload charts, read analysis, write journal. Come back tomorrow.'};
+  const taBox=document.getElementById('ta-box');taBox.style.display='block';
+  const numEl=document.getElementById('ta-num');numEl.textContent=tradesAllowed;numEl.style.color=tradeColors[tradesAllowed];
+  document.getElementById('ta-reason').textContent=tradeReasons[tradesAllowed];
+  document.getElementById('ta-rule').textContent=tradeRules[tradesAllowed];
+  document.getElementById('ta-slots').innerHTML=[1,2,3].map(i=>'<div class="ta-slot" style="border-color:'+(i<=tradesAllowed?tradeColors[tradesAllowed]:'var(--border)')+';color:'+(i<=tradesAllowed?tradeColors[tradesAllowed]:'var(--dim)')+';">'+(i<=tradesAllowed?i:'—')+'</div>').join('');
   localStorage.setItem('apexTradeAllowance',JSON.stringify({allowed:tradesAllowed,used:0,verdict:v,score:score,date:new Date().toDateString(),timestamp:Date.now()}));
+  const patternWarnings=analyzePatterns();
+  const piBox=document.getElementById('pattern-insights');
+  if(patternWarnings.length>0){
+    piBox.style.display='block';
+    document.getElementById('pi-items').innerHTML=patternWarnings.map(w=>'<div class="pi-item"><div class="pi-icon">'+w.icon+'</div><div>'+w.text+'</div></div>').join('');
+  }
   const m=d.metrics||{};
-  const metricsData=[{lbl:'CORTISOL',val:m.cortisol_level||'&#8212;',pct:100-(m.cortisol_pct||50),color:'#ff6644',note:'stress hormone'},{lbl:'DOPAMINE',val:m.dopamine_state||'&#8212;',pct:m.dopamine_pct||50,color:'#00aaff',note:'reward system'},{lbl:'PREFRONTAL',val:m.prefrontal_activity||'&#8212;',pct:m.prefrontal_pct||50,color:'#00ff88',note:'rational brain'},{lbl:'AMYGDALA',val:m.amygdala_state||'&#8212;',pct:100-(m.amygdala_pct||30),color:'#aa44ff',note:'threat center'}];
-  document.getElementById('neuro-grid').innerHTML=metricsData.map(m=>`<div class="nm"><div class="nm-val">${(m.val||'').split(' ')[0]}</div><div class="nm-bar-bg"><div class="nm-bar" data-w="${m.pct}" style="background:${m.color}"></div></div><div class="nm-lbl">${m.lbl}</div><div style="font-size:9px;color:var(--dim);font-family:'Share Tech Mono',monospace;margin-top:2px;">${m.note}</div></div>`).join('');
+  const metricsData=[{lbl:'CORTISOL',val:(m.cortisol_level||'—').split(' ')[0],pct:100-(m.cortisol_pct||50),color:'#ff6644',note:'stress'},{lbl:'DOPAMINE',val:(m.dopamine_state||'—').split(' ')[0],pct:m.dopamine_pct||50,color:'#00aaff',note:'reward'},{lbl:'PREFRONTAL',val:(m.prefrontal_activity||'—').split(' ')[0],pct:m.prefrontal_pct||50,color:'#00ff88',note:'rational'},{lbl:'AMYGDALA',val:(m.amygdala_state||'—').split(' ')[0],pct:100-(m.amygdala_pct||30),color:'#aa44ff',note:'threat'}];
+  document.getElementById('neuro-grid').innerHTML=metricsData.map(m=>'<div class="nm"><div class="nm-val">'+m.val+'</div><div class="nm-bar-bg"><div class="nm-bar" data-w="'+m.pct+'" style="background:'+m.color+'"></div></div><div class="nm-lbl">'+m.lbl+'</div><div style="font-size:9px;color:var(--dim);font-family:Share Tech Mono,monospace;margin-top:2px;">'+m.note+'</div></div>').join('');
   setTimeout(()=>{document.querySelectorAll('.nm-bar[data-w]').forEach(b=>{b.style.width=b.dataset.w+'%';});},100);
-  document.getElementById('fp-items').innerHTML=(d.emotion_fingerprint||[]).map(e=>`<div class="fp-item"><div class="fp-name">${e.emotion}</div><div class="fp-bar-bg"><div class="fp-bar" data-w="${e.level}" style="background:${e.color}"></div></div><div class="fp-pct" style="color:${e.color}">${e.level}%</div></div>`).join('');
+  document.getElementById('fp-items').innerHTML=(d.emotion_fingerprint||[]).map(e=>'<div class="fp-item"><div class="fp-name">'+e.emotion+'</div><div class="fp-bar-bg"><div class="fp-bar" data-w="'+e.level+'" style="background:'+e.color+'"></div></div><div class="fp-pct" style="color:'+e.color+'">'+e.level+'%</div></div>').join('');
   setTimeout(()=>{document.querySelectorAll('.fp-bar[data-w]').forEach(b=>{b.style.width=b.dataset.w+'%';});},200);
   document.getElementById('ai-msg-body').textContent=d.ai_analysis||'';
-  document.getElementById('rx-items').innerHTML=(d.prescriptions||[]).map(p=>`<div class="rx-item"><div class="rx-icon">${p.icon}</div><div class="rx-text">${p.text}</div></div>`).join('');
-  const rulesBox=document.getElementById('rules-box');rulesBox.className='rules-box '+(v==='CLEARED'?'green':v==='CAUTION'?'yellow':'red');
-  document.getElementById('rules-title').innerHTML=v==='CLEARED'?'&#10003; YOUR TRADING RULES &#8212; THIS SESSION':v==='CAUTION'?'&#9888; RESTRICTED RULES':'&#128683; WHY YOU MUST NOT TRADE NOW';
-  document.getElementById('rules-list').innerHTML=(d.trading_rules||[]).map(r=>`<li data-icon="&#9656;">&#9656; ${r}</li>`).join('');
-  const mins=d.cooldown_minutes||0;if(v==='BLOCKED'&&mins>0){document.getElementById('retest-box').style.display='block';startCountdown(mins*60);}
-  document.getElementById('go-trade-btn').style.display=v==='CLEARED'?'block':'none';
-  saveHistory(v,score);renderHistory();
+  document.getElementById('rx-items').innerHTML=(d.prescriptions||[]).map(p=>'<div class="rx-item"><div class="rx-icon">'+p.icon+'</div><div class="rx-text">'+p.text+'</div></div>').join('');
+  const rulesBox=document.getElementById('rules-box');
+  rulesBox.className='rules-box '+(v==='CLEARED'?'green':v==='CAUTION'?'yellow':'red');
+  document.getElementById('rules-title').textContent=v==='CLEARED'?'YOUR TRADING RULES THIS SESSION':v==='CAUTION'?'RESTRICTED TRADING RULES':'WHY YOU MUST NOT TRADE NOW';
+  document.getElementById('rules-list').innerHTML=(d.trading_rules||[]).map(r=>'<li>▸ '+r+'</li>').join('');
+  const mins=d.cooldown_minutes||0;
+  if(v==='BLOCKED'&&mins>0){document.getElementById('retest-box').style.display='block';startCountdown(mins*60);}
+  document.getElementById('go-btn').style.display=v==='CLEARED'?'block':'none';
+  renderHistory();
   const el=document.getElementById('live-score');if(el){el.textContent=score;el.style.color=scoreColor(score);}
-  updateStateIndicator(score);window.scrollTo({top:0,behavior:'smooth'});
+  updateStateIndicator(score);
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function startCountdown(seconds){const el=document.getElementById('retest-timer');const iv=setInterval(()=>{if(seconds<=0){clearInterval(iv);el.textContent='00:00';return;}seconds--;const m=Math.floor(seconds/60).toString().padStart(2,'0');const s=(seconds%60).toString().padStart(2,'0');el.textContent=`${m}:${s}`;},1000);}
-function saveHistory(verdict,score){const hist=JSON.parse(localStorage.getItem('apexNeuroHistory')||'[]');hist.unshift({time:new Date().toLocaleTimeString(),date:new Date().toLocaleDateString(),verdict,score});localStorage.setItem('apexNeuroHistory',JSON.stringify(hist.slice(0,20)));}
-function renderHistory(){const hist=JSON.parse(localStorage.getItem('apexNeuroHistory')||'[]');const el=document.getElementById('history-rows');if(!hist.length){el.innerHTML='<div style="text-align:center;padding:16px;font-family:Share Tech Mono,monospace;font-size:11px;color:var(--dim)">No history yet</div>';return;}el.innerHTML=hist.slice(0,8).map(h=>{const cls=h.verdict==='CLEARED'?'c':h.verdict==='CAUTION'?'w':'b';return`<div class="history-row"><span class="h-time">${h.date}<br/>${h.time}</span><span class="h-state ${cls}">${h.verdict}</span><span class="h-score" style="color:${scoreColor(h.score)}">${h.score}</span></div>`;}).join('');}
-function goTrade(){window.location.href='smallchange_analyzer.html';}
-function retakeAssessment(){document.getElementById('verdict-screen').style.display='none';document.getElementById('phase-dots').style.display='flex';nextPhase(0);window.scrollTo({top:0,behavior:'smooth'});}
-function resetAll(){Object.keys(answers).forEach(k=>delete answers[k]);document.querySelectorAll('.q-opt').forEach(b=>b.classList.remove('selected','danger-opt','warn-opt'));document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('answered','danger','warning'));document.getElementById('q-sleep').value=5;document.getElementById('q-mood').value=5;document.getElementById('q-confidence').value=5;document.getElementById('q-freetext').value='';['sleep-feedback','mood-feedback','confidence-feedback'].forEach(id=>{const el=document.getElementById(id);if(el){el.innerHTML='';el.style.color='';}});document.getElementById('verdict-screen').style.display='none';document.getElementById('live-score').textContent='&#8212;';document.getElementById('live-score').style.color='var(--bright)';document.getElementById('phase-dots').style.display='flex';nextPhase(0);window.scrollTo({top:0,behavior:'smooth'});}
+function startCountdown(seconds){
+  const el=document.getElementById('retest-timer');
+  const iv=setInterval(()=>{if(seconds<=0){clearInterval(iv);el.textContent='00:00';return;}seconds--;const m=Math.floor(seconds/60).toString().padStart(2,'0');const s=(seconds%60).toString().padStart(2,'0');el.textContent=m+':'+s;},1000);
+}
+
+function renderHistory(){
+  const hist=getHistory();
+  const el=document.getElementById('history-rows');
+  if(!hist.length){el.innerHTML='<div style="text-align:center;padding:16px;font-family:Share Tech Mono,monospace;font-size:11px;color:var(--dim)">No history yet</div>';return;}
+  el.innerHTML=hist.slice(0,8).map(h=>{const cls=h.verdict==='CLEARED'?'c':h.verdict==='CAUTION'?'w':'b';return '<div class="history-row"><span class="h-time">'+h.date+'<br/>'+h.time+'</span><span class="h-state '+cls+'">'+h.verdict+'</span><span class="h-score" style="color:'+scoreColor(h.score)+'">'+h.score+'</span></div>';}).join('');
+}
+
+function retake(){document.getElementById('verdict-screen').style.display='none';document.getElementById('phase-dots').style.display='flex';nextPhase(0);window.scrollTo({top:0,behavior:'smooth'});}
+
+function resetAll(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  document.querySelectorAll('.q-opt').forEach(b=>b.classList.remove('selected','danger-opt','warn-opt'));
+  document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('answered','danger','warning'));
+  document.getElementById('q-sleep').value=5;
+  document.getElementById('q-mood').value=5;
+  document.getElementById('q-confidence').value=5;
+  document.getElementById('q-freetext').value='';
+  ['sleep-feedback','mood-feedback','confidence-feedback'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='';el.style.color='';}});
+  document.getElementById('verdict-screen').style.display='none';
+  document.getElementById('live-score').textContent='--';
+  document.getElementById('live-score').style.color='var(--bright)';
+  document.getElementById('phase-dots').style.display='flex';
+  nextPhase(0);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Init
+showPatternWarnings();
 renderHistory();
 </script>
 </body>
