@@ -42,12 +42,12 @@ canvas{position:fixed;inset:0;z-index:0;opacity:.25;}
 .menu-card:active{transform:scale(.98);}
 .menu-card.neuro::before{background:var(--blue,#3d9cff);}
 .menu-card.analyze::before{background:var(--gold);}
-.menu-card.journal::before{background:var(--buy);}
+.menu-card.journal::before{background:var(--buy);}.menu-card.insights::before{background:var(--purple,#aa44ff);}.menu-card.landing::before{background:var(--gold);}
 .menu-card.backtest::before{background:#aa44ff;}
 .mc-icon{width:48px;height:48px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
 .menu-card.neuro .mc-icon{background:rgba(61,156,255,.1);}
 .menu-card.analyze .mc-icon{background:rgba(232,184,75,.1);}
-.menu-card.journal .mc-icon{background:rgba(0,217,126,.1);}
+.menu-card.journal .mc-icon{background:rgba(0,217,126,.1);}.menu-card.insights .mc-icon{background:rgba(170,68,255,.1);}.menu-card.landing .mc-icon{background:rgba(212,168,83,.1);}
 .menu-card.backtest .mc-icon{background:rgba(170,68,255,.1);}
 .mc-body{flex:1;}
 .mc-title{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:3px;}
@@ -82,7 +82,7 @@ canvas{position:fixed;inset:0;z-index:0;opacity:.25;}
   <div class="hero">
     <div class="hero-tag">TRADING OPERATING SYSTEM</div>
     <h1 class="hero-title">Small<span>Change</span></h1>
-    <p class="hero-sub">Psychology · Analysis · Journal · Any Market</p>
+    <p class="hero-sub">Psychology · Guardian · Journal · Insights</p>
   </div>
   <div class="ticker">
     <div class="tick-item"><span class="tick-sym">BTC</span><span class="tick-price" id="t-btc">—</span><span class="tick-chg" id="t-btc-c">—</span></div>
@@ -96,20 +96,18 @@ canvas{position:fixed;inset:0;z-index:0;opacity:.25;}
       <div class="mc-body"><div class="mc-title">01 · NeuroTrader</div><div class="mc-desc">Psychological clearance before every trade. Sets your daily trade allowance.</div></div>
       <div class="mc-badge go">START</div>
     </a>
-    <a class="menu-card analyze" href="smallchange_analyzer.html">
-      <div class="mc-icon">&#128202;</div>
-      <div class="mc-body"><div class="mc-title">02 · Chart Analyzer</div><div class="mc-desc">Upload 5min+1H+4H charts. Get LONG/SHORT signal with entry, SL, TP for any market.</div></div>
-      <div class="mc-badge go">ANALYZE</div>
+    <a class="menu-card insights" href="smallchange_insights.html">
+      <div class="mc-icon">&#128200;</div>
+      <div class="mc-body"><div class="mc-title">02 · Weekly Insights</div><div class="mc-desc">Your 7 psychological patterns detected from journal data. Book-based analysis every week.</div></div>
     </a>
     <a class="menu-card journal" href="smallchange_journal.html">
       <div class="mc-icon">&#128221;</div>
       <div class="mc-body"><div class="mc-title">03 · Trade Journal</div><div class="mc-desc">Log every trade — win or loss. Session complete warning included.</div></div>
       <div class="mc-badge go">JOURNAL</div>
     </a>
-    <a class="menu-card backtest" href="smallchange_analyzer.html#tab-bt">
-      <div class="mc-icon">&#128300;</div>
-      <div class="mc-body"><div class="mc-title">04 · Backtest Engine</div><div class="mc-desc">Upload charts from 1 week ago. Auto WIN/LOSS. Build your real win rate.</div></div>
-      <div class="mc-badge new">50 TRADES</div>
+    <a class="menu-card landing" href="smallchange_landing.html">
+      <div class="mc-icon">&#128214;</div>
+      <div class="mc-body"><div class="mc-title">04 · About SmallChange</div><div class="mc-desc">The psychology behind the system. 7 patterns. 6 books. One guardian.</div></div>
     </a>
   </div>
   <div class="session-mini">

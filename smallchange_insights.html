@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmallChange - Weekly Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#04060a;--p1:#080c12;--p2:#0c1218;--border:#132030;--gold:#d4a853;--gold2:#f0c878;--buy:#00d97e;--sell:#ff3355;--warn:#ff9f0a;--blue:#3d9cff;--purple:#aa44ff;--text:#8aa8c0;--bright:#ddeeff;--dim:#1e3448;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min-height:100vh;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(212,168,83,.04) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:36px 18px 80px;}
+.back-btn{position:fixed;top:10px;left:10px;z-index:999;display:flex;align-items:center;gap:6px;background:rgba(4,6,10,.85);border:1px solid #132030;border-radius:3px;padding:6px 12px;text-decoration:none;font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:1px;color:var(--gold);backdrop-filter:blur(8px);}
+.hdr{text-align:center;margin-bottom:40px;}
+.hdr-date{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:5px;color:var(--gold);opacity:.7;margin-bottom:8px;}
+.hdr-title{font-family:"Orbitron",monospace;font-size:clamp(22px,4vw,38px);font-weight:900;color:var(--bright);letter-spacing:2px;line-height:1;}
+.hdr-title span{color:var(--gold);}
+.hdr-sub{margin-top:8px;font-size:15px;color:var(--dim);font-style:italic;}
+.sh{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.sh::after{content:"";flex:1;height:1px;background:var(--border);}
+.score-hero{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:28px;margin-bottom:24px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;text-align:center;}
+.sh-item{}
+.sh-val{font-family:"Orbitron",monospace;font-size:28px;font-weight:700;color:var(--bright);line-height:1;margin-bottom:4px;}
+.sh-val.g{color:var(--buy);}
+.sh-val.r{color:var(--sell);}
+.sh-val.o{color:var(--gold);}
+.sh-val.b{color:var(--blue);}
+.sh-lbl{font-family:"Share Tech Mono",monospace;font-size:8px;letter-spacing:2px;color:var(--dim);}
+.discipline-bar{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:20px;margin-bottom:24px;}
+.db-label{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
+.db-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.db-fill{height:100%;border-radius:4px;transition:width 1.5s ease;width:0%;}
+.db-stats{display:flex;justify-content:space-between;font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);}
+.trend-row{display:flex;gap:6px;margin-top:14px;align-items:flex-end;height:60px;}
+.trend-bar{flex:1;border-radius:2px 2px 0 0;min-height:4px;transition:height .8s ease;position:relative;}
+.trend-bar:hover::after{content:attr(data-score);position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--bright);white-space:nowrap;}
+.pattern-list{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.pattern-card{background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:18px 20px;position:relative;overflow:hidden;}
+.pattern-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;}
+.pattern-card.danger::before{background:var(--sell);}
+.pattern-card.warning::before{background:var(--warn);}
+.pattern-card.good::before{background:var(--buy);}
+.pc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pc-name{font-family:"Orbitron",monospace;font-size:13px;font-weight:700;color:var(--bright);}
+.pc-count{font-family:"Share Tech Mono",monospace;font-size:10px;padding:3px 10px;border-radius:2px;}
+.pc-count.danger{background:rgba(255,51,85,.1);border:1px solid rgba(255,51,85,.2);color:var(--sell);}
+.pc-count.warning{background:rgba(255,159,10,.1);border:1px solid rgba(255,159,10,.2);color:var(--warn);}
+.pc-count.good{background:rgba(0,217,126,.1);border:1px solid rgba(0,217,126,.2);color:var(--buy);}
+.pc-desc{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:10px;}
+.pc-quote{font-size:12px;color:var(--gold);font-style:italic;padding:8px 12px;background:rgba(212,168,83,.04);border-left:2px solid rgba(212,168,83,.3);border-radius:0 2px 2px 0;margin-bottom:8px;}
+.pc-book{font-family:"Share Tech Mono",monospace;font-size:9px;color:var(--dim);letter-spacing:1px;}
+.pc-trades{margin-top:10px;display:flex;flex-direction:column;gap:6px;}
+.pc-trade{font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--dim);padding:6px 10px;background:var(--p2);border-radius:2px;line-height:1.5;}
+.ai-insight{background:var(--p1);border:1px solid rgba(212,168,83,.2);border-radius:3px;padding:20px 22px;margin-bottom:20px;}
+.ai-insight-title{font-family:"Share Tech Mono",monospace;font-size:9px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.ai-insight-body{font-size:15px;line-height:1.9;color:var(--text);font-style:italic;}
+.no-data{text-align:center;padding:60px 20px;background:var(--p1);border:1px solid var(--border);border-radius:3px;}
+.no-data-icon{font-size:48px;margin-bottom:16px;}
+.no-data-title{font-family:"Orbitron",monospace;font-size:18px;font-weight:700;color:var(--bright);margin-bottom:10px;}
+.no-data-msg{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:20px;}
+.action-btn{display:inline-block;background:var(--gold);color:#000;padding:12px 28px;border-radius:3px;text-decoration:none;font-family:"Share Tech Mono",monospace;font-size:11px;letter-spacing:2px;transition:all .3s;}
+.action-btn:hover{background:var(--gold2);}
+.week-selector{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.ws-btn{background:var(--p1);border:1px solid var(--border);color:var(--dim);padding:6px 14px;border-radius:2px;cursor:pointer;font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:1px;transition:all .2s;}
+.ws-btn.active{background:rgba(212,168,83,.08);border-color:var(--gold);color:var(--gold);}
+.analyzing{text-align:center;padding:40px;}
+.a-spin{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;margin:0 auto 14px;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.score-hero{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<a href="index.html" class="back-btn">HOME</a>
+<div class="page">
+<header class="hdr">
+  <div class="hdr-date" id="hdr-date"></div>
+  <h1 class="hdr-title">Weekly <span>Insights</span></h1>
+  <p class="hdr-sub">Your psychological patterns this week — from your journal data</p>
+</header>
+<div class="week-selector">
+  <button class="ws-btn active" onclick="loadWeek(7,this)">This Week</button>
+  <button class="ws-btn" onclick="loadWeek(14,this)">Last 2 Weeks</button>
+  <button class="ws-btn" onclick="loadWeek(30,this)">Last 30 Days</button>
+  <button class="ws-btn" onclick="loadWeek(90,this)">All Time</button>
+</div>
+<div id="main-content"></div>
+</div>
+<script>
+const RAILWAY_URL = "https://small-change-production.up.railway.app";
+
+const PATTERNS = {
+  revenge: {
+    name: "Revenge Trading",
+    icon: "😤",
+    type: "danger",
+    book: "Trading in the Zone — Mark Douglas",
+    quote: "A loss is feedback, not a signal to recover. The market has no memory of your loss.",
+    detect: function(trades){
+      const flagged = [];
+      for(let i=1;i<trades.length;i++){
+        const prev = trades[i-1];
+        const curr = trades[i];
+        if(prev.outcome==="loss"){
+          const prevTime = new Date(prev.time||0).getTime();
+          const currTime = new Date(curr.time||0).getTime();
+          const minsDiff = (currTime - prevTime) / 60000;
+          if(minsDiff > 0 && minsDiff < 20){
+            flagged.push({trade: curr, detail: "Trade placed "+Math.round(minsDiff)+" min after a loss"});
+          }
+        }
+      }
+      return flagged;
+    }
+  },
+  fomo: {
+    name: "FOMO Trading",
+    icon: "📱",
+    type: "danger",
+    book: "Trading in the Zone — Mark Douglas",
+    quote: "The market will always have another move. FOMO is not a trading strategy.",
+    detect: function(trades){
+      return trades.filter(t=>(t.emotions?.fear||0)>7||(t.emotions?.greed||0)>7).map(t=>({trade:t,detail:"High fear/greed detected: Fear "+( t.emotions?.fear||0)+"/10 Greed "+(t.emotions?.greed||0)+"/10"}));
+    }
+  },
+  tilt: {
+    name: "Tilt State",
+    icon: "🌀",
+    type: "danger",
+    book: "Market Wizards — Paul Tudor Jones",
+    quote: "When on a losing streak, cut your size in half. Then cut it in half again. Survive today.",
+    detect: function(trades){
+      const flagged = [];
+      for(let i=2;i<trades.length;i++){
+        if(trades[i-2].outcome==="loss"&&trades[i-1].outcome==="loss"&&trades[i].outcome==="loss"){
+          flagged.push({trade:trades[i],detail:"3 consecutive losses — Tilt State activated"});
+        }
+      }
+      return flagged;
+    }
+  },
+  hope: {
+    name: "Hope Trading",
+    icon: "🙏",
+    type: "danger",
+    book: "Jesse Livermore",
+    quote: "Hope is not a strategy. A stop loss is not a suggestion. It is a survival mechanism.",
+    detect: function(trades){
+      return trades.filter(t=>t.sl_hit==="moved"||t.sl_hit==="yes").map(t=>({trade:t,detail:t.sl_hit==="moved"?"Stop loss was moved":"Stop loss was hit — check if it was respected"}));
+    }
+  },
+  overconfidence: {
+    name: "Overconfidence",
+    icon: "🏆",
+    type: "warning",
+    book: "Trading for a Living — Alexander Elder",
+    quote: "Your best enemy after a winning streak is yourself. Markets humble the overconfident.",
+    detect: function(trades){
+      const flagged = [];
+      for(let i=2;i<trades.length;i++){
+        if(trades[i-2].outcome==="win"&&trades[i-1].outcome==="win"){
+          const conf = trades[i].emotions?.conf||0;
+          if(conf>=8){flagged.push({trade:trades[i],detail:"Confidence at "+conf+"/10 after 2+ consecutive wins"});}
+        }
+      }
+      return flagged;
+    }
+  },
+  overtrade: {
+    name: "Overtrading",
+    icon: "📊",
+    type: "warning",
+    book: "Thinking Fast and Slow — Daniel Kahneman",
+    quote: "Decision quality degrades with every additional decision. Your best trades are your first two.",
+    detect: function(trades){
+      const byDate = {};
+      trades.forEach(t=>{const d=t.date||new Date().toDateString();if(!byDate[d])byDate[d]=[];byDate[d].push(t);});
+      const flagged = [];
+      Object.entries(byDate).forEach(([date,dayTrades])=>{if(dayTrades.length>3){flagged.push({trade:dayTrades[dayTrades.length-1],detail:dayTrades.length+" trades taken on "+date+" (above 3 trade limit)"});}});
+      return flagged;
+    }
+  },
+  paralysis: {
+    name: "Discipline",
+    icon: "✅",
+    type: "good",
+    book: "Trading in the Zone — Mark Douglas",
+    quote: "Consistent execution of your edge is the hallmark of a professional trader.",
+    detect: function(trades){
+      const followed = trades.filter(t=>(t.rules_followed||[]).length>=(t.rules_violated||[]).length);
+      return followed.map(t=>({trade:t,detail:"Rules followed: "+(t.rules_followed||[]).length+" | Violated: "+(t.rules_violated||[]).length}));
+    }
+  }
+};
+
+function loadWeek(days, btn){
+  document.querySelectorAll(".ws-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderInsights(days);
+}
+
+function getTradesForPeriod(days){
+  try{
+    const saved = localStorage.getItem("apexSessionTrades");
+    if(!saved) return [];
+    const data = JSON.parse(saved);
+    const allTrades = Array.isArray(data) ? data : (data.trades||[]);
+    const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
+    return allTrades.filter(t=>{
+      const tradeTime = new Date(t.date||t.time||0).getTime();
+      return tradeTime > cutoff || days >= 90;
+    });
+  }catch(e){return [];}
+}
+
+function getAllTrades(){
+  try{
+    const sessions = [];
+    for(let i=0;i<localStorage.length;i++){
+      const key = localStorage.key(i);
+      if(key && key.includes("Session")||key==="apexSessionTrades"){
+        try{
+          const data = JSON.parse(localStorage.getItem(key));
+          if(data && data.trades) sessions.push(...data.trades);
+          else if(Array.isArray(data)) sessions.push(...data);
+        }catch(e){}
+      }
+    }
+    const main = JSON.parse(localStorage.getItem("apexSessionTrades")||"{}");
+    if(main.trades) sessions.push(...main.trades);
+    return [...new Map(sessions.map(t=>[t.id+t.time,t])).values()];
+  }catch(e){return [];}
+}
+
+function calcDisciplineScore(trades){
+  if(!trades.length) return 0;
+  let score = 0;
+  trades.forEach(t=>{
+    const followed = (t.rules_followed||[]).length;
+    const violated = (t.rules_violated||[]).length;
+    const total = followed + violated;
+    if(total > 0) score += (followed/total)*100;
+    else score += 50;
+  });
+  return Math.round(score/trades.length);
+}
+
+function getNeuroHistory(){
+  try{return JSON.parse(localStorage.getItem("sc_neuro_history")||"[]");}catch(e){return [];}
+}
+
+async function generateAIInsight(patterns, stats){
+  try{
+    const summary = Object.entries(patterns)
+      .filter(([k,v])=>v.length>0&&k!=="paralysis")
+      .map(([k,v])=>PATTERNS[k].name+": "+v.length+" times")
+      .join(", ");
+
+    const prompt = "You are SmallChange AI trading psychologist. Write a brief personal weekly insight. Stats: "+stats.total+" trades, "+stats.wins+" wins ("+stats.wr+"% win rate), discipline score "+stats.discipline+"%. Patterns detected: "+(summary||"No negative patterns this week")+". Write 4-5 sentences, warm but honest, second person. End with one powerful sentence about next week. Under 100 words.";
+
+    const res = await fetch(RAILWAY_URL+"/api/analyze",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:200,messages:[{role:"user",content:prompt}]})
+    });
+    const data = await res.json();
+    return data.content?.map(b=>b.text||"").join("")||"";
+  }catch(e){return "";}
+}
+
+async function renderInsights(days){
+  const content = document.getElementById("main-content");
+  content.innerHTML = '<div class="analyzing"><div class="a-spin"></div><div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--gold);letter-spacing:3px;">ANALYZING YOUR PATTERNS...</div></div>';
+
+  const trades = getAllTrades();
+
+  if(trades.length < 2){
+    content.innerHTML = '<div class="no-data"><div class="no-data-icon">📓</div><div class="no-data-title">No Journal Data Yet</div><div class="no-data-msg">Complete at least 2 trades in your journal to see pattern analysis.<br/>The more you journal, the smarter SmallChange becomes about your specific patterns.</div><a href="smallchange_journal.html" class="action-btn">OPEN JOURNAL</a></div>';
+    return;
+  }
+
+  const wins = trades.filter(t=>t.outcome==="win").length;
+  const losses = trades.filter(t=>t.outcome==="loss").length;
+  const wr = Math.round((wins/trades.length)*100);
+  const pnl = trades.reduce((s,t)=>s+(parseFloat(t.pnl)||0),0);
+  const discipline = calcDisciplineScore(trades);
+  const neuroHist = getNeuroHistory();
+  const avgNeuro = neuroHist.length>0?Math.round(neuroHist.slice(0,7).reduce((s,h)=>s+h.score,0)/Math.min(neuroHist.length,7)):0;
+
+  // Detect all patterns
+  const detected = {};
+  Object.entries(PATTERNS).forEach(([key,p])=>{
+    detected[key] = p.detect(trades);
+  });
+
+  const stats = {total:trades.length,wins,losses,wr,pnl,discipline,avgNeuro};
+  const aiText = await generateAIInsight(detected, stats);
+
+  // Build HTML
+  let html = "";
+
+  // Score hero
+  html += '<div class="sh">This Period</div>';
+  html += '<div class="score-hero">';
+  html += '<div class="sh-item"><div class="sh-val o">'+trades.length+'</div><div class="sh-lbl">TRADES</div></div>';
+  html += '<div class="sh-item"><div class="sh-val '+(wr>=60?"g":"r")+'">'+wr+'%</div><div class="sh-lbl">WIN RATE</div></div>';
+  html += '<div class="sh-item"><div class="sh-val '+(pnl>=0?"g":"r")+'">'+(pnl>=0?"+$":"-$")+Math.abs(pnl).toFixed(0)+'</div><div class="sh-lbl">P&L</div></div>';
+  html += '<div class="sh-item"><div class="sh-val b">'+discipline+'%</div><div class="sh-lbl">DISCIPLINE</div></div>';
+  html += "</div>";
+
+  // Discipline bar
+  html += '<div class="sh">Discipline Score</div>';
+  html += '<div class="discipline-bar">';
+  html += '<div class="db-label">RULE COMPLIANCE THIS PERIOD</div>';
+  html += '<div class="db-track"><div class="db-fill" id="disc-fill" style="width:0%;background:'+(discipline>=70?"var(--buy)":discipline>=50?"var(--warn)":"var(--sell)")+'"></div></div>';
+  html += '<div class="db-stats"><span>0%</span><span style="color:'+(discipline>=70?"var(--buy)":discipline>=50?"var(--warn)":"var(--sell)")+'">'+discipline+'% — '+(discipline>=70?"DISCIPLINED":discipline>=50?"MODERATE":"NEEDS WORK")+'</span><span>100%</span></div>';
+
+  // Neuro trend
+  if(neuroHist.length>0){
+    html += '<div style="margin-top:16px;font-family:Share Tech Mono,monospace;font-size:8px;letter-spacing:2px;color:var(--dim);margin-bottom:8px;">NEURO SCORE TREND (LAST 7 SESSIONS)</div>';
+    html += '<div class="trend-row">';
+    const recent7 = neuroHist.slice(0,7).reverse();
+    const maxScore = Math.max(...recent7.map(h=>h.score),1);
+    recent7.forEach(h=>{
+      const h_pct = Math.round((h.score/100)*100);
+      const color = h.score>=72?"var(--buy)":h.score>=50?"var(--warn)":"var(--sell)";
+      html += '<div class="trend-bar" data-score="'+h.score+'" style="height:'+h_pct+'%;background:'+color+';opacity:.8;"></div>';
+    });
+    html += "</div>";
+  }
+  html += "</div>";
+
+  // AI Insight
+  if(aiText){
+    html += '<div class="sh">AI Personal Debrief</div>';
+    html += '<div class="ai-insight"><div class="ai-insight-title">SMALLCHANGE AI WEEKLY ANALYSIS</div><div class="ai-insight-body">'+aiText+'</div></div>';
+  }
+
+  // Patterns detected
+  html += '<div class="sh">Pattern Analysis</div>';
+  html += '<div class="pattern-list">';
+
+  // Negative patterns first
+  const negativePatterns = ["tilt","revenge","hope","fomo","overconfidence","overtrade"];
+  let hasNegative = false;
+
+  negativePatterns.forEach(key=>{
+    const p = PATTERNS[key];
+    const instances = detected[key];
+    if(instances.length===0) return;
+    hasNegative = true;
+    html += '<div class="pattern-card '+p.type+'">';
+    html += '<div class="pc-header">';
+    html += '<div class="pc-name">'+p.icon+' '+p.name+'</div>';
+    html += '<div class="pc-count '+p.type+'">'+instances.length+'x DETECTED</div>';
+    html += "</div>";
+    html += '<div class="pc-quote">'+p.quote+'</div>';
+    html += '<div class="pc-book">SOURCE: '+p.book+'</div>';
+    if(instances.length>0){
+      html += '<div class="pc-trades">';
+      instances.slice(0,3).forEach(inst=>{
+        html += '<div class="pc-trade">▸ '+inst.detail+'</div>';
+      });
+      html += "</div>";
+    }
+    html += "</div>";
+  });
+
+  if(!hasNegative){
+    html += '<div class="pattern-card good"><div class="pc-header"><div class="pc-name">✅ No Negative Patterns Detected</div><div class="pc-count good">CLEAN</div></div><div class="pc-desc">No revenge trading, FOMO, tilt state, hope trading, overconfidence or overtrading detected in this period. Excellent discipline.</div><div class="pc-quote">Consistent execution of your edge is the hallmark of a professional trader. — Mark Douglas</div></div>';
+  }
+
+  // Discipline pattern
+  const disciplineInstances = detected["paralysis"];
+  if(disciplineInstances.length>0){
+    html += '<div class="pattern-card good">';
+    html += '<div class="pc-header"><div class="pc-name">✅ Discipline Moments</div><div class="pc-count good">'+disciplineInstances.length+'x</div></div>';
+    html += '<div class="pc-desc">'+disciplineInstances.length+' trades where you followed your rules correctly. This is the foundation of consistent profitability.</div>';
+    html += '<div class="pc-quote">'+PATTERNS["paralysis"].quote+'</div>';
+    html += '<div class="pc-book">SOURCE: '+PATTERNS["paralysis"].book+"</div>";
+    html += "</div>";
+  }
+
+  html += "</div>";
+
+  // Recommendation
+  const topPattern = negativePatterns.find(k=>detected[k].length>0);
+  if(topPattern){
+    const p = PATTERNS[topPattern];
+    html += '<div class="sh">This Week Focus</div>';
+    html += '<div style="background:var(--p1);border:1px solid var(--border);border-radius:3px;padding:20px 22px;margin-bottom:16px;">';
+    html += '<div style="font-family:Share Tech Mono,monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;">PRIMARY PATTERN TO WORK ON</div>';
+    html += '<div style="font-size:18px;font-weight:700;color:var(--bright);margin-bottom:8px;">'+p.icon+' '+p.name+'</div>';
+    html += '<div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:12px;">This was your most common pattern this period. Before every trade next week, ask yourself: Am I in '+p.name.toLowerCase()+' mode right now?</div>';
+    html += '<div style="font-size:12px;color:var(--gold);font-style:italic;padding:10px;background:rgba(212,168,83,.04);border-left:2px solid rgba(212,168,83,.3);">'+p.quote+'</div>';
+    html += "</div>";
+  }
+
+  html += '<div style="text-align:center;margin-top:20px;"><a href="smallchange_journal.html" class="action-btn">OPEN JOURNAL</a></div>';
+
+  content.innerHTML = html;
+
+  // Animate discipline bar
+  setTimeout(()=>{
+    const fill = document.getElementById("disc-fill");
+    if(fill) fill.style.width = discipline+"%";
+  },300);
+
+  // Set date
+  document.getElementById("hdr-date").textContent = new Date().toLocaleDateString("en-IN",{weekday:"long",year:"numeric",month:"long",day:"numeric"}).toUpperCase();
+}
+
+// Init
+renderInsights(7);
+</script>
+</body>
+</html>
